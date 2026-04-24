@@ -85,7 +85,7 @@ i { font-style: normal; }
 }
 
 .logo img {
-  height: 36px;
+  height: 28px;
   width: auto;
   border-radius: 0;
   object-fit: contain;
@@ -93,19 +93,19 @@ i { font-style: normal; }
 
 .logo-text {
   font-family: var(--font-serif);
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 700;
   background: var(--gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   flex-shrink: 0;
   overflow: visible;
 }
@@ -114,17 +114,17 @@ i { font-style: normal; }
   background: linear-gradient(135deg, var(--accent), #F5D76E);
   color: var(--text-primary);
   border: none;
-  padding: 6px 12px;
+  padding: 4px 10px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   font-weight: 500;
   transition: all 0.2s;
   flex-shrink: 0;
-  max-width: 110px;
+  max-width: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -137,17 +137,17 @@ i { font-style: normal; }
 /* ===== Header Language Switcher ===== */
 .header-lang-switcher {
   position: relative;
-  margin-left: 8px;
+  margin-left: 4px;
   flex-shrink: 0;
 }
 .header-lang-switcher .lang-btn {
   background: none;
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
-  width: 34px;
-  height: 34px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  font-size: 16px;
+  font-size: 13px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1157,12 +1157,12 @@ i { font-style: normal; }
   display: flex;
   align-items: center;
   background: rgba(255,255,255,0.08);
-  padding: 4px 6px;
-  border-radius: 16px;
-  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 10px;
   color: var(--gold);
   white-space: nowrap;
-  max-width: 85px;
+  max-width: 70px;
   overflow: hidden;
   text-overflow: ellipsis;
   flex-shrink: 0;
