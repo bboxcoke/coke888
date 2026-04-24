@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1A0A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3A3A1A;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#FFF8DC;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0.8" />
+    </linearGradient>
+    <linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:transparent" />
+      <stop offset="40%" style="stop-color:rgba(255,255,255,0.08)" />
+      <stop offset="60%" style="stop-color:rgba(255,255,255,0.08)" />
+      <stop offset="100%" style="stop-color:transparent" />
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFD700" />
+      <stop offset="50%" style="stop-color:#FFF8DC" />
+      <stop offset="100%" style="stop-color:#FFD700" />
+    </linearGradient>
+    <linearGradient id="subGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFD700" />
+      <stop offset="100%" style="stop-color:#FFF8DC" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#bg)" rx="12" ry="12"/>
+
+  <!-- Shimmer overlay -->
+  <rect width="300" height="200" fill="url(#shimmer)" rx="12" ry="12"/>
+
+  <!-- Decorative circles -->
+  <circle cx="224" cy="30" r="52" fill="#FFD700" opacity="0.1086902177779277"/>
+  <circle cx="137" cy="152" r="24" fill="#FFD700" opacity="0.1083730485573606"/>
+  <circle cx="36" cy="27" r="19" fill="#FFD700" opacity="0.12831562408811165"/>
+
+  <!-- Stars -->
+  <polygon points="25,40 26.6,42.8 29,44 26.6,45.2 25,48 23.4,45.2 21,44 23.4,42.8" fill="#FFD700" opacity="0.41110773780839127"/>
+  <polygon points="57,106 59.0,109.5 62,111 59.0,112.5 57,116 55.0,112.5 52,111 55.0,109.5" fill="#FFD700" opacity="0.34415139602455835"/>
+  <polygon points="251,127 251.8,128.4 253,129 251.8,129.6 251,131 250.2,129.6 249,129 250.2,128.4" fill="#FFD700" opacity="0.38383405729792863"/>
+  <polygon points="288,166 288.8,167.4 290,168 288.8,168.6 288,170 287.2,168.6 286,168 287.2,167.4" fill="#FFD700" opacity="0.37306549616563"/>
+
+  <!-- Decorative diagonal lines -->
+  <line x1="0" y1="0" x2="114" y2="200" stroke="#FFD700" stroke-width="1" opacity="0.1"/>
+  <line x1="206" y1="0" x2="300" y2="200" stroke="#FFD700" stroke-width="1" opacity="0.1"/>
+
+  <!-- Game icon (large, centered, subtle) -->
+  <text x="150" y="90" text-anchor="middle" font-size="48" fill="url(#subGrad)" opacity="0.3" font-family="Arial, sans-serif">🛤️</text>
+
+  <!-- Bottom accent bar -->
+  <rect x="0" y="195" width="300" height="5" fill="url(#accent)" opacity="0.8"/>
+
+  <!-- Category badge -->
+  <rect x="10" y="10" width="58" height="20" rx="10" fill="rgba(0,0,0,0.4)" stroke="#FFD700" stroke-width="0.5"/>
+  <text x="18" y="24" font-size="10" fill="#FFD700" font-family="Arial, sans-serif" font-weight="bold">老虎机</text>
+
+  <!-- Small decorative icon top-right -->
+  <text x="285" y="22" text-anchor="end" font-size="16" opacity="0.6">🛤️</text>
+
+  <!-- Game title -->
+  <text x="150" y="148" text-anchor="middle" font-size="22" font-weight="bold" fill="url(#titleGrad)" font-family="Arial, sans-serif" letter-spacing="2">黄金之路</text>
+
+  <!-- Subtitle / Provider -->
+  <rect x="110" y="158" width="80" height="20" rx="10" fill="rgba(0,0,0,0.5)" stroke="url(#subGrad)" stroke-width="0.5"/>
+  <text x="150" y="172" text-anchor="middle" font-size="11" fill="#FFD700" font-family="Arial, sans-serif" font-weight="bold">JDB</text>
+
+  <!-- Border glow -->
+  <rect width="300" height="200" fill="none" stroke="url(#accent)" stroke-width="1.5" rx="12" ry="12" opacity="0.6"/>
+</svg>

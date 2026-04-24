@@ -426,6 +426,36 @@ i { font-style: normal; }
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s;
+  /* 黑金金属感边框 */
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+  box-shadow: 
+    0 0 8px rgba(212, 168, 67, 0.3),
+    0 0 4px rgba(0, 0, 0, 0.8),
+    inset 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.game-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  background: linear-gradient(
+    135deg,
+    #D4A843 0%,
+    #FFD700 25%,
+    #B8860B 50%,
+    #DAA520 75%,
+    #D4A843 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.85;
 }
 
 .game-card:active {
@@ -437,6 +467,8 @@ i { font-style: normal; }
   aspect-ratio: 1 / 1;
   object-fit: cover;
   background: linear-gradient(135deg, #1a1a3e, #2a2a5e);
+  position: relative;
+  z-index: 1;
 }
 
 .game-card .game-name {
@@ -447,6 +479,8 @@ i { font-style: normal; }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  position: relative;
+  z-index: 1;
 }
 
 /* ===== Bottom Nav ===== */

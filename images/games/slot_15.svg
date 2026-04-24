@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A0A00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2A0A00;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#FFA500;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0.8" />
+    </linearGradient>
+    <linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:transparent" />
+      <stop offset="40%" style="stop-color:rgba(255,255,255,0.08)" />
+      <stop offset="60%" style="stop-color:rgba(255,255,255,0.08)" />
+      <stop offset="100%" style="stop-color:transparent" />
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFD700" />
+      <stop offset="50%" style="stop-color:#FFF8DC" />
+      <stop offset="100%" style="stop-color:#FFD700" />
+    </linearGradient>
+    <linearGradient id="subGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFD700" />
+      <stop offset="100%" style="stop-color:#FFA500" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#bg)" rx="12" ry="12"/>
+
+  <!-- Shimmer overlay -->
+  <rect width="300" height="200" fill="url(#shimmer)" rx="12" ry="12"/>
+
+  <!-- Decorative circles -->
+  <circle cx="262" cy="153" r="34" fill="#FFD700" opacity="0.12676600630784518"/>
+  <circle cx="235" cy="79" r="21" fill="#FFD700" opacity="0.08746875347064148"/>
+  <circle cx="54" cy="106" r="56" fill="#FFD700" opacity="0.07554399519607197"/>
+
+  <!-- Stars -->
+  <polygon points="116,12 117.2,14.1 119,15 117.2,15.9 116,18 114.8,15.9 113,15 114.8,14.1" fill="#FFD700" opacity="0.221771847992118"/>
+  <polygon points="80,106 80.8,107.4 82,108 80.8,108.6 80,110 79.2,108.6 78,108 79.2,107.4" fill="#FFD700" opacity="0.5711637799609655"/>
+  <polygon points="207,70 208.2,72.1 210,73 208.2,73.9 207,76 205.8,73.9 204,73 205.8,72.1" fill="#FFD700" opacity="0.2375973928419129"/>
+  <polygon points="110,150 111.2,152.1 113,153 111.2,153.9 110,156 108.8,153.9 107,153 108.8,152.1" fill="#FFD700" opacity="0.3776517396709138"/>
+  <polygon points="207,40 207.8,41.4 209,42 207.8,42.6 207,44 206.2,42.6 205,42 206.2,41.4" fill="#FFD700" opacity="0.512030125303599"/>
+  <polygon points="278,179 279.2,181.1 281,182 279.2,182.9 278,185 276.8,182.9 275,182 276.8,181.1" fill="#FFD700" opacity="0.2760316704978879"/>
+  <polygon points="79,145 81.0,148.5 84,150 81.0,151.5 79,155 77.0,151.5 74,150 77.0,148.5" fill="#FFD700" opacity="0.4942917842865652"/>
+  <polygon points="194,9 194.8,10.4 196,11 194.8,11.6 194,13 193.2,11.6 192,11 193.2,10.4" fill="#FFD700" opacity="0.4333446930918211"/>
+
+  <!-- Decorative diagonal lines -->
+  <line x1="0" y1="0" x2="122" y2="200" stroke="#FFD700" stroke-width="1" opacity="0.1"/>
+  <line x1="236" y1="0" x2="300" y2="200" stroke="#FFD700" stroke-width="1" opacity="0.1"/>
+
+  <!-- Game icon (large, centered, subtle) -->
+  <text x="150" y="90" text-anchor="middle" font-size="48" fill="url(#subGrad)" opacity="0.3" font-family="Arial, sans-serif">🐵</text>
+
+  <!-- Bottom accent bar -->
+  <rect x="0" y="197" width="300" height="3" fill="url(#accent)" opacity="0.8"/>
+
+  <!-- Category badge -->
+  <rect x="10" y="10" width="58" height="20" rx="10" fill="rgba(0,0,0,0.4)" stroke="#FFD700" stroke-width="0.5"/>
+  <text x="18" y="24" font-size="10" fill="#FFD700" font-family="Arial, sans-serif" font-weight="bold">老虎机</text>
+
+  <!-- Small decorative icon top-right -->
+  <text x="285" y="22" text-anchor="end" font-size="16" opacity="0.6">🐵</text>
+
+  <!-- Game title -->
+  <text x="150" y="148" text-anchor="middle" font-size="22" font-weight="bold" fill="url(#titleGrad)" font-family="Arial, sans-serif" letter-spacing="2">金猴送福</text>
+
+  <!-- Subtitle / Provider -->
+  <rect x="110" y="158" width="80" height="20" rx="10" fill="rgba(0,0,0,0.5)" stroke="url(#subGrad)" stroke-width="0.5"/>
+  <text x="150" y="172" text-anchor="middle" font-size="11" fill="#FFD700" font-family="Arial, sans-serif" font-weight="bold">JDB</text>
+
+  <!-- Border glow -->
+  <rect width="300" height="200" fill="none" stroke="url(#accent)" stroke-width="1.5" rx="12" ry="12" opacity="0.6"/>
+</svg>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A0A1A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1A1A3A;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8B4513;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#D2691E;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#8B4513;stop-opacity:0.8" />
+    </linearGradient>
+    <linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:transparent" />
+      <stop offset="40%" style="stop-color:rgba(255,255,255,0.08)" />
+      <stop offset="60%" style="stop-color:rgba(255,255,255,0.08)" />
+      <stop offset="100%" style="stop-color:transparent" />
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFD700" />
+      <stop offset="50%" style="stop-color:#FFF8DC" />
+      <stop offset="100%" style="stop-color:#FFD700" />
+    </linearGradient>
+    <linearGradient id="subGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8B4513" />
+      <stop offset="100%" style="stop-color:#D2691E" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#bg)" rx="12" ry="12"/>
+
+  <!-- Shimmer overlay -->
+  <rect width="300" height="200" fill="url(#shimmer)" rx="12" ry="12"/>
+
+  <!-- Decorative circles -->
+  <circle cx="87" cy="162" r="60" fill="#8B4513" opacity="0.10347886108029636"/>
+  <circle cx="278" cy="69" r="60" fill="#8B4513" opacity="0.1261985007195604"/>
+  <circle cx="104" cy="59" r="57" fill="#8B4513" opacity="0.06075195632359407"/>
+  <circle cx="132" cy="75" r="47" fill="#8B4513" opacity="0.10565636817389001"/>
+  <circle cx="280" cy="59" r="45" fill="#8B4513" opacity="0.0717104494779929"/>
+
+  <!-- Stars -->
+  <polygon points="226,23 227.2,25.1 229,26 227.2,26.9 226,29 224.8,26.9 223,26 224.8,25.1" fill="#8B4513" opacity="0.39955445728380734"/>
+  <polygon points="93,40 93.8,41.4 95,42 93.8,42.6 93,44 92.2,42.6 91,42 92.2,41.4" fill="#8B4513" opacity="0.4792580412272745"/>
+  <polygon points="159,92 160.6,94.8 163,96 160.6,97.2 159,100 157.4,97.2 155,96 157.4,94.8" fill="#8B4513" opacity="0.23793778074271157"/>
+  <polygon points="132,75 133.6,77.8 136,79 133.6,80.2 132,83 130.4,80.2 128,79 130.4,77.8" fill="#8B4513" opacity="0.4592227459386838"/>
+
+  <!-- Decorative diagonal lines -->
+  <line x1="0" y1="0" x2="130" y2="200" stroke="#8B4513" stroke-width="1" opacity="0.1"/>
+  <line x1="167" y1="0" x2="300" y2="200" stroke="#8B4513" stroke-width="1" opacity="0.1"/>
+
+  <!-- Game icon (large, centered, subtle) -->
+  <text x="150" y="90" text-anchor="middle" font-size="48" fill="url(#subGrad)" opacity="0.3" font-family="Arial, sans-serif">🏴‍☠️</text>
+
+  <!-- Bottom accent bar -->
+  <rect x="0" y="195" width="300" height="5" fill="url(#accent)" opacity="0.8"/>
+
+  <!-- Category badge -->
+  <rect x="10" y="10" width="58" height="20" rx="10" fill="rgba(0,0,0,0.4)" stroke="#8B4513" stroke-width="0.5"/>
+  <text x="18" y="24" font-size="10" fill="#8B4513" font-family="Arial, sans-serif" font-weight="bold">老虎机</text>
+
+  <!-- Small decorative icon top-right -->
+  <text x="285" y="22" text-anchor="end" font-size="16" opacity="0.6">🏴‍☠️</text>
+
+  <!-- Game title -->
+  <text x="150" y="148" text-anchor="middle" font-size="22" font-weight="bold" fill="url(#titleGrad)" font-family="Arial, sans-serif" letter-spacing="2">海盗宝藏</text>
+
+  <!-- Subtitle / Provider -->
+  <rect x="110" y="158" width="80" height="20" rx="10" fill="rgba(0,0,0,0.5)" stroke="url(#subGrad)" stroke-width="0.5"/>
+  <text x="150" y="172" text-anchor="middle" font-size="11" fill="#8B4513" font-family="Arial, sans-serif" font-weight="bold">Joker</text>
+
+  <!-- Border glow -->
+  <rect width="300" height="200" fill="none" stroke="url(#accent)" stroke-width="1.5" rx="12" ry="12" opacity="0.6"/>
+</svg>
