@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Coke 888 | 后台管理</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: #1a1a28;
+      --accent: #D4A843;
+      --accent-hover: #F5D76E;
+      --gold: #D4A843;
+      --gold-light: #F5D76E;
+      --gold-dark: #B8860B;
+      --gold-gradient: linear-gradient(135deg, #F5D76E, #D4A843, #B8860B);
+      --text-primary: #f0f0f0;
+      --text-secondary: #8888a0;
+      --text-muted: #555568;
+      --border-color: #1e1e30;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+    html, body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 14px;
+      height: 100%;
+    }
+    input, select, button, textarea { font-family: inherit; outline: none; }
+    a { text-decoration: none; color: inherit; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+
+    /* ===== Admin Login Page ===== */
+    .admin-login-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a28 50%, #0a0a0f 100%);
+      padding: 20px;
+    }
+    .admin-login-box {
+      background: var(--bg-secondary);
+      padding: 32px 24px;
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 380px;
+      border: 1px solid var(--border-color);
+    }
+    .admin-login-box h1 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 6px;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .admin-login-box p { text-align: center; color: var(--text-secondary); font-size: 13px; margin-bottom: 24px; }
+    .admin-login-box input {
+      width: 100%; padding: 12px 14px; margin-bottom: 12px;
+      background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm); color: var(--text-primary); font-size: 14px;
+    }
+    .admin-login-box input:focus { border-color: var(--accent); }
+    .admin-login-box button {
+      width: 100%; padding: 12px;
+      background: linear-gradient(135deg, var(--accent), #F5D76E);
+      color: #000; border: none; border-radius: var(--radius-sm);
+      font-size: 15px; font-weight: 600; cursor: pointer;
+    }
+    .admin-login-box button:active { opacity: 0.8; }
+    .admin-login-error { color: #ef5350; font-size: 12px; text-align: center; margin-top: 8px; }
+
+    /* ===== Admin Dashboard ===== */
+    .admin-dashboard { padding: 10px; max-width: 1200px; margin: 0 auto; }
+
+    /* ===== Admin Header ===== */
+    .admin-header {
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); padding: 10px 14px;
+      border-radius: 10px; margin-bottom: 20px;
+    }
+    .admin-header h2 { margin: 0; font-size: 18px; color: var(--text-primary); }
+    .admin-header .logout-btn {
+      background: #D4A843; color: var(--text-primary); border: none;
+      padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 12px;
+    }
+    .admin-header .logout-btn:hover { background: #d63851; }
+
+    /* ===== Admin Stats Grid ===== */
+    .admin-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px;
+    }
+    .admin-stat-card {
+      background: #1a1a28; border-radius: 10px; padding: 16px;
+      position: relative; border-top: 3px solid;
+    }
+    .admin-stat-card .stat-value { font-size: 22px; font-weight: bold; color: #D4A843; margin-bottom: 4px; }
+    .admin-stat-card .stat-label { font-size: 12px; color: #9e9eb8; margin: 0; }
+    .admin-stat-card .stat-icon {
+      position: absolute; top: 12px; right: 12px; opacity: 0.3; font-size: 20px; color: var(--text-primary);
+    }
+
+    /* ===== Admin Tabs ===== */
+    .admin-tabs {
+      display: flex; gap: 0; border-bottom: 1px solid var(--border-color);
+      margin-bottom: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    }
+    .admin-tab {
+      padding: 10px 18px; cursor: pointer; color: #9e9eb8;
+      background: none; border: none; font-size: 13px; white-space: nowrap;
+      transition: color 0.3s, border-color 0.3s;
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+    }
+    .admin-tab:hover { color: var(--text-primary); }
+    .admin-tab.active { color: #D4A843; border-bottom-color: #D4A843; }
+
+    /* ===== Tab Content ===== */
+    .admin-tab-content { min-height: 200px; }
+    .admin-tab-pane { display: none; }
+    .admin-tab-pane.active { display: block; }
+
+    /* ===== Admin Table ===== */
+    .admin-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    .admin-table thead { background: var(--bg-primary); }
+    .admin-table th {
+      padding: 10px; text-align: left; font-size: 12px; color: #9e9eb8;
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+      border-bottom: 2px solid var(--border-color);
+    }
+    .admin-table td {
+      padding: 10px; font-size: 13px; color: #e0e0f0; border-bottom: 1px solid var(--border-color);
+    }
+    .admin-table tr:hover td { background: rgba(212, 168, 67, 0.05); }
+    .admin-table .empty-message td { text-align: center; color: #9e9eb8; padding: 30px 10px; }
+
+    /* ===== Admin Badges ===== */
+    .admin-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+    .admin-badge.success { background: rgba(0, 200, 83, 0.15); color: #00c853; }
+    .admin-badge.pending { background: rgba(255, 193, 7, 0.15); color: #ffc107; }
+    .admin-badge.danger { background: rgba(233, 69, 96, 0.15); color: #ef5350; }
+
+    /* ===== Admin Buttons ===== */
+    .admin-btn { padding: 6px 12px; font-size: 12px; border-radius: 6px; border: none; cursor: pointer; transition: opacity 0.3s; }
+    .admin-btn:hover { opacity: 0.8; }
+    .admin-btn-primary { background: #D4A843; color: var(--text-primary); }
+    .admin-btn-danger { background: #b71c1c; color: var(--text-primary); }
+    .admin-btn-success { background: #2e7d32; color: var(--text-primary); }
+    .admin-section-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0 0 16px 0; padding-bottom: 8px; border-bottom: 1px solid var(--border-color); }
+
+    /* ===== Admin Card ===== */
+    .admin-card {
+      background: var(--bg-secondary); border-radius: var(--radius);
+      padding: 16px; margin-bottom: 20px;
+    }
+    .admin-card h4 { font-size: 14px; color: var(--text-primary); margin-bottom: 12px; }
+    .admin-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .admin-search-bar { display: flex; gap: 6px; }
+    .admin-search-bar input {
+      padding: 6px 10px; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm); color: var(--text-primary); font-size: 12px; width: 160px;
+    }
+    .admin-filter-group select {
+      padding: 6px 10px; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm); color: var(--text-primary); font-size: 12px;
+    }
+    .dashboard-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .metric-item { padding: 12px; background: var(--bg-primary); border-radius: var(--radius-sm); }
+    .metric-label { font-size: 11px; color: var(--text-secondary); }
+    .metric-value { font-size: 16px; font-weight: 700; color: var(--gold); margin-top: 4px; }
+    .admin-table-wrapper { overflow-x: auto; }
+
+    /* ===== Responsive ===== */
+    @media (min-width: 768px) {
+      .admin-stats { grid-template-columns: repeat(4, 1fr); }
+      .admin-dashboard { padding: 20px; }
+      .admin-header { padding: 14px 20px; }
+      .admin-header h2 { font-size: 22px; }
+      .admin-table th, .admin-table td { padding: 12px 16px; }
+      .admin-btn { padding: 8px 16px; font-size: 13px; }
+      .admin-tab { padding: 12px 24px; font-size: 14px; }
+      .dashboard-metrics { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+      background: #D4A843; color: #000; padding: 10px 20px;
+      border-radius: 8px; font-size: 13px; font-weight: 600;
+      z-index: 9999; display: none; white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- ===== Login Page ===== -->
+<div id="adminLoginPage" class="admin-login-page">
+  <div class="admin-login-box">
+    <h1>Coke 888</h1>
+    <p>后台管理系统</p>
+    <input type="text" id="adminUsername" placeholder="管理员账号" value="admin">
+    <input type="password" id="adminPassword" placeholder="密码" value="admin888" onkeydown="if(event.key==='Enter') adminLogin()">
+    <button onclick="adminLogin()">登 录</button>
+    <div id="adminLoginError" class="admin-login-error"></div>
+  </div>
+</div>
+
+<!-- ===== Dashboard ===== -->
+<div id="adminDashboard" class="admin-dashboard" style="display:none">
+  <div class="admin-header">
+    <h2><i class="fas fa-shield-alt"></i> 后台管理系统</h2>
+    <button class="logout-btn" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> 退出</button>
+  </div>
+
+  <!-- Stats -->
+  <div class="admin-stats">
+    <div class="admin-stat-card" style="border-top-color:#D4A843">
+      <div class="stat-icon"><i class="fas fa-users"></i></div>
+      <div class="stat-value" id="statTotalUsers">0</div>
+      <div class="stat-label">总用户</div>
+    </div>
+    <div class="admin-stat-card" style="border-top-color:#4caf50">
+      <div class="stat-icon"><i class="fas fa-arrow-down"></i></div>
+      <div class="stat-value" id="statTotalRecharge">0</div>
+      <div class="stat-label">总充值 (MMK)</div>
+    </div>
+    <div class="admin-stat-card" style="border-top-color:#ff9800">
+      <div class="stat-icon"><i class="fas fa-arrow-up"></i></div>
+      <div class="stat-value" id="statTotalWithdraw">0</div>
+      <div class="stat-label">总提现 (MMK)</div>
+    </div>
+    <div class="admin-stat-card" style="border-top-color:#2196f3">
+      <div class="stat-icon"><i class="fas fa-circle"></i></div>
+      <div class="stat-value" id="statOnlineUsers">0</div>
+      <div class="stat-label">在线人数</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="admin-tabs">
+    <button class="admin-tab active" onclick="switchAdminTab('dashboard')"><i class="fas fa-tachometer-alt"></i> 仪表盘</button>
+    <button class="admin-tab" onclick="switchAdminTab('users')"><i class="fas fa-user-cog"></i> 用户管理</button>
+    <button class="admin-tab" onclick="switchAdminTab('recharges')"><i class="fas fa-credit-card"></i> 充值管理</button>
+    <button class="admin-tab" onclick="switchAdminTab('withdraws')"><i class="fas fa-money-bill-wave"></i> 提现管理</button>
+    <button class="admin-tab" onclick="switchAdminTab('promotions')"><i class="fas fa-gift"></i> 优惠管理</button>
+  </div>
+
+  <!-- Tab: Dashboard -->
+  <div class="admin-tab-content admin-tab-pane active" id="adminTabDashboard">
+    <div class="admin-card">
+      <h4><i class="fas fa-chart-line"></i> 平台概览</h4>
+      <div class="dashboard-metrics">
+        <div class="metric-item">
+          <div class="metric-label">今日注册</div>
+          <div class="metric-value" id="dashboardTodayReg">0</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-label">今日充值</div>
+          <div class="metric-value" id="dashboardTodayRecharge">0 MMK</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-label">今日提现</div>
+          <div class="metric-value" id="dashboardTodayWithdraw">0 MMK</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-label">活跃用户 (7天)</div>
+          <div class="metric-value" id="dashboardActive7d">0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Users -->
+  <div class="admin-tab-content admin-tab-pane" id="adminTabUsers">
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <h4><i class="fas fa-users"></i> 用户列表</h4>
+        <div class="admin-search-bar">
+          <input type="text" id="adminUserSearch" placeholder="搜索用户名/手机号..." oninput="adminSearchUsers()">
+          <button class="admin-btn admin-btn-primary" onclick="adminSearchUsers()"><i class="fas fa-search"></i></button>
+        </div>
+      </div>
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="usersTable">
+          <thead><tr>
+            <th>ID</th><th>用户名</th><th>手机号</th><th>余额</th><th>状态</th><th>注册时间</th><th>操作</th>
+          </tr></thead>
+          <tbody id="usersTableBody"><tr><td colspan="7" style="text-align:center;color:#888">加载中...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Recharges -->
+  <div class="admin-tab-content admin-tab-pane" id="adminTabRecharges">
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <h4><i class="fas fa-credit-card"></i> 充值记录</h4>
+        <div class="admin-filter-group">
+          <select id="rechargeStatusFilter" onchange="adminFilterRecharges()">
+            <option value="">全部状态</option>
+            <option value="待处理">待处理</option>
+            <option value="已完成">已完成</option>
+            <option value="已失败">已失败</option>
+          </select>
+        </div>
+      </div>
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="rechargesTable">
+          <thead><tr>
+            <th>订单号</th><th>用户名</th><th>金额 (MMK)</th><th>方式</th><th>状态</th><th>时间</th><th>操作</th>
+          </tr></thead>
+          <tbody id="rechargesTableBody"><tr><td colspan="7" style="text-align:center;color:#888">加载中...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Withdraws -->
+  <div class="admin-tab-content admin-tab-pane" id="adminTabWithdraws">
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <h4><i class="fas fa-money-bill-wave"></i> 提现记录</h4>
+        <div class="admin-filter-group">
+          <select id="withdrawStatusFilter" onchange="adminFilterWithdraws()">
+            <option value="">全部状态</option>
+            <option value="待处理">待处理</option>
+            <option value="已完成">已完成</option>
+            <option value="已失败">已失败</option>
+          </select>
+        </div>
+      </div>
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="withdrawsTable">
+          <thead><tr>
+            <th>订单号</th><th>用户名</th><th>金额 (MMK)</th><th>方式</th><th>账户</th><th>状态</th><th>时间</th><th>操作</th>
+          </tr></thead>
+          <tbody id="withdrawsTableBody"><tr><td colspan="8" style="text-align:center;color:#888">加载中...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Promotions -->
+  <div class="admin-tab-content admin-tab-pane" id="adminTabPromotions">
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <h4><i class="fas fa-gift"></i> 优惠活动管理</h4>
+        <button class="admin-btn admin-btn-primary" onclick="adminAddPromotion()"><i class="fas fa-plus"></i> 添加活动</button>
+      </div>
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="promotionsTable">
+          <thead><tr>
+            <th>ID</th><th>标题</th><th>类型</th><th>状态</th><th>开始时间</th><th>结束时间</th><th>操作</th>
+          </tr></thead>
+          <tbody id="promotionsTableBody"><tr><td colspan="7" style="text-align:center;color:#888">加载中...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let adminToken = localStorage.getItem('admin_token') || '';
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 2500);
+}
+
+async function api(url, body) {
+  const headers = {'Content-Type':'application/json'};
+  if (adminToken) headers['Authorization'] = 'Bearer ' + adminToken;
+  const res = await fetch(url, { method: body ? 'POST' : 'GET', headers, body: body ? JSON.stringify(body) : undefined });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || '请求失败');
+  return data;
+}
+
+async function adminLogin() {
+  const username = document.getElementById('adminUsername').value.trim();
+  const password = document.getElementById('adminPassword').value.trim();
+  const errEl = document.getElementById('adminLoginError');
+  errEl.textContent = '';
+  try {
+    const data = await api('/api/admin/login', { username, password });
+    adminToken = data.token;
+    localStorage.setItem('admin_token', adminToken);
+    document.getElementById('adminLoginPage').style.display = 'none';
+    document.getElementById('adminDashboard').style.display = 'block';
+    loadAdminData();
+  } catch(e) {
+    errEl.textContent = e.message;
+  }
+}
+
+function adminLogout() {
+  adminToken = '';
+  localStorage.removeItem('admin_token');
+  document.getElementById('adminDashboard').style.display = 'none';
+  document.getElementById('adminLoginPage').style.display = 'flex';
+}
+
+function switchAdminTab(tab) {
+  const panes = document.querySelectorAll('.admin-tab-pane');
+  const tabs = document.querySelectorAll('.admin-tab');
+  const tabNames = ['dashboard','users','recharges','withdraws','promotions'];
+  const idx = tabNames.indexOf(tab);
+  panes.forEach(p => p.classList.remove('active'));
+  tabs.forEach(t => t.classList.remove('active'));
+  if (idx >= 0) { panes[idx].classList.add('active'); tabs[idx].classList.add('active'); }
+  if (tab === 'dashboard') loadDashboard();
+  if (tab === 'users') loadUsers();
+  if (tab === 'recharges') loadRecharges();
+  if (tab === 'withdraws') loadWithdraws();
+  if (tab === 'promotions') loadPromotions();
+}
+
+async function loadAdminData() {
+  try {
+    const stats = await api('/api/admin/stats');
+    document.getElementById('statTotalUsers').textContent = stats.totalUsers ?? 0;
+    document.getElementById('statTotalRecharge').textContent = (stats.totalRecharge ?? 0).toLocaleString();
+    document.getElementById('statTotalWithdraw').textContent = (stats.totalWithdraw ?? 0).toLocaleString();
+    document.getElementById('statOnlineUsers').textContent = stats.onlineUsers ?? 0;
+    loadDashboard();
+    loadUsers();
+    loadRecharges();
+    loadWithdraws();
+    loadPromotions();
+  } catch(e) { showToast('加载数据失败: ' + e.message); }
+}
+
+async function loadDashboard() {
+  try {
+    const stats = await api('/api/admin/stats');
+    document.getElementById('dashboardTodayReg').textContent = stats.todayReg ?? 0;
+    document.getElementById('dashboardTodayRecharge').textContent = (stats.todayRecharge ?? 0).toLocaleString() + ' MMK';
+    document.getElementById('dashboardTodayWithdraw').textContent = (stats.todayWithdraw ?? 0).toLocaleString() + ' MMK';
+    document.getElementById('dashboardActive7d').textContent = stats.active7d ?? 0;
+  } catch(e) {}
+}
+
+async function loadUsers() {
+  try {
+    const data = await api('/api/admin/users');
+    const tbody = document.getElementById('usersTableBody');
+    if (!data.users || data.users.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888">暂无用户</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.users.map(u => '<tr>' +
+      '<td>'+u.id+'</td>' +
+      '<td>'+escapeHtml(u.username)+'</td>' +
+      '<td>'+escapeHtml(u.phone||'-')+'</td>' +
+      '<td>'+formatBalance(u.balance)+'</td>' +
+      '<td><span class="admin-badge '+(u.status==='正常'||u.status==='活跃'?'success':u.status==='禁用'?'danger':'pending')+'">'+escapeHtml(u.status||'正常')+'</span></td>' +
+      '<td>'+formatDate(u.created_at)+'</td>' +
+      '<td>'+
+        '<button class="admin-btn admin-btn-primary" style="margin-right:4px" onclick="adminToggleStatus('+u.id+',\''+escapeHtml(u.status)+'\')">'+(u.status==='禁用'?'启用':'禁用')+'</button>'+
+        '<button class="admin-btn admin-btn-success" onclick="adminAdjustBalance('+u.id+',\''+escapeHtml(u.username)+'\','+u.balance+')">调额</button>'+
+      '</td></tr>').join('');
+  } catch(e) { showToast('加载用户失败'); }
+}
+
+function adminSearchUsers() {
+  loadUsers();
+}
+
+async function loadRecharges() {
+  try {
+    const filter = document.getElementById('rechargeStatusFilter').value;
+    const url = '/api/admin/deposits' + (filter ? '?status='+encodeURIComponent(filter) : '');
+    const data = await api(url);
+    const tbody = document.getElementById('rechargesTableBody');
+    if (!data.deposits || data.deposits.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888">暂无记录</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.deposits.map(d => '<tr>' +
+      '<td>'+escapeHtml(d.order_no||d.id)+'</td>' +
+      '<td>'+escapeHtml(d.username)+'</td>' +
+      '<td>'+formatBalance(d.amount)+'</td>' +
+      '<td>'+escapeHtml(d.method||'银行转账')+'</td>' +
+      '<td><span class="admin-badge '+(d.status==='已完成'?'success':d.status==='待处理'?'pending':'danger')+'">'+escapeHtml(d.status)+'</span></td>' +
+      '<td>'+formatDate(d.created_at)+'</td>' +
+      '<td>'+
+        (d.status==='待处理' ? '<button class="admin-btn admin-btn-success" style="margin-right:4px" onclick="adminApprove('+d.id+',\'deposit\')">通过</button><button class="admin-btn admin-btn-danger" onclick="adminReject('+d.id+',\'deposit\')">拒绝</button>' : '-') +
+      '</td></tr>').join('');
+  } catch(e) { showToast('加载充值记录失败'); }
+}
+
+function adminFilterRecharges() { loadRecharges(); }
+
+async function loadWithdraws() {
+  try {
+    const filter = document.getElementById('withdrawStatusFilter').value;
+    const url = '/api/admin/withdrawals' + (filter ? '?status='+encodeURIComponent(filter) : '');
+    const data = await api(url);
+    const tbody = document.getElementById('withdrawsTableBody');
+    if (!data.withdrawals || data.withdrawals.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#888">暂无记录</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.withdrawals.map(w => '<tr>' +
+      '<td>'+escapeHtml(w.order_no||w.id)+'</td>' +
+      '<td>'+escapeHtml(w.username)+'</td>' +
+      '<td>'+formatBalance(w.amount)+'</td>' +
+      '<td>'+escapeHtml(w.method||'银行转账')+'</td>' +
+      '<td>'+escapeHtml(w.account||'-')+'</td>' +
+      '<td><span class="admin-badge '+(w.status==='已完成'?'success':w.status==='待处理'?'pending':'danger')+'">'+escapeHtml(w.status)+'</span></td>' +
+      '<td>'+formatDate(w.created_at)+'</td>' +
+      '<td>'+
+        (w.status==='待处理' ? '<button class="admin-btn admin-btn-success" style="margin-right:4px" onclick="adminApprove('+w.id+',\'withdraw\')">通过</button><button class="admin-btn admin-btn-danger" onclick="adminReject('+w.id+',\'withdraw\')">拒绝</button>' : '-') +
+      '</td></tr>').join('');
+  } catch(e) { showToast('加载提现记录失败'); }
+}
+
+function adminFilterWithdraws() { loadWithdraws(); }
+
+async function loadPromotions() {
+  try {
+    const data = await api('/api/admin/promotions');
+    const tbody = document.getElementById('promotionsTableBody');
+    if (!data.promotions || data.promotions.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888">暂无活动</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.promotions.map(p => '<tr>' +
+      '<td>'+p.id+'</td>' +
+      '<td>'+escapeHtml(p.title)+'</td>' +
+      '<td>'+escapeHtml(p.type||'-')+'</td>' +
+      '<td><span class="admin-badge '+(p.status==='进行中'||p.status==='active'?'success':p.status==='已结束'||p.status==='ended'?'danger':'pending')+'">'+escapeHtml(p.status)+'</span></td>' +
+      '<td>'+formatDate(p.start_time||p.start_date)+'</td>' +
+      '<td>'+formatDate(p.end_time||p.end_date)+'</td>' +
+      '<td><button class="admin-btn admin-btn-danger" onclick="adminDeletePromotion('+p.id+')">删除</button></td></tr>').join('');
+  } catch(e) { showToast('加载活动失败'); }
+}
+
+function adminAddPromotion() {
+  const title = prompt('活动标题:');
+  if (!title) return;
+  const type = prompt('活动类型 (首存/返水/红包/其他):') || '其他';
+  api('/api/admin/add-promotion', { title, type }).then(() => { showToast('添加成功'); loadPromotions(); }).catch(e => showToast(e.message));
+}
+
+function adminDeletePromotion(id) {
+  if (!confirm('确定删除此活动？')) return;
+  api('/api/admin/delete-promotion', { id }).then(() => { showToast('已删除'); loadPromotions(); }).catch(e => showToast(e.message));
+}
+
+async function adminApprove(id, type) {
+  try { await api('/api/admin/approve', { id, type }); showToast('已通过'); if (type==='deposit') loadRecharges(); else loadWithdraws(); }
+  catch(e) { showToast(e.message); }
+}
+
+async function adminReject(id, type) {
+  try { await api('/api/admin/reject', { id, type }); showToast('已拒绝'); if (type==='deposit') loadRecharges(); else loadWithdraws(); }
+  catch(e) { showToast(e.message); }
+}
+
+async function adminToggleStatus(userId, currentStatus) {
+  const newStatus = currentStatus === '禁用' ? '正常' : '禁用';
+  try { await api('/api/admin/user-status', { userId, status: newStatus }); showToast('已'+(newStatus==='禁用'?'禁用':'启用')); loadUsers(); }
+  catch(e) { showToast(e.message); }
+}
+
+function adminAdjustBalance(userId, username, currentBalance) {
+  const amount = prompt('设置 '+username+' 的余额 (当前: '+currentBalance+'):');
+  if (amount === null || isNaN(parseFloat(amount))) return;
+  api('/api/admin/update-balance', { userId, amount: parseFloat(amount) }).then(() => { showToast('余额已更新'); loadUsers(); }).catch(e => showToast(e.message));
+}
+
+function formatBalance(n) { return (parseFloat(n)||0).toLocaleString('en-US', {minimumFractionDigits:0,maximumFractionDigits:2}); }
+function formatDate(d) { if (!d) return '-'; try { return new Date(d).toLocaleDateString('zh-CN'); } catch(e) { return d; } }
+function escapeHtml(s) { if (s===null||s===undefined) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// Auto-login if token exists
+(async function() {
+  if (adminToken) {
+    try {
+      const stats = await api('/api/admin/stats');
+      document.getElementById('adminLoginPage').style.display = 'none';
+      document.getElementById('adminDashboard').style.display = 'block';
+      loadAdminData();
+    } catch(e) {
+      adminToken = '';
+      localStorage.removeItem('admin_token');
+    }
+  }
+})();
+</script>
+</body>
+</html>
