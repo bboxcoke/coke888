@@ -105,7 +105,7 @@ i { font-style: normal; }
 .header-right {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   flex-shrink: 0;
   overflow: visible;
 }
@@ -114,16 +114,20 @@ i { font-style: normal; }
   background: linear-gradient(135deg, var(--accent), #F5D76E);
   color: var(--text-primary);
   border: none;
-  padding: 6px 16px;
+  padding: 6px 12px;
   border-radius: 20px;
-  font-size: 13px;
+  font-size: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   font-weight: 500;
   transition: all 0.2s;
   flex-shrink: 0;
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .login-btn:active {
@@ -132,10 +136,9 @@ i { font-style: normal; }
 
 /* ===== Header Language Switcher ===== */
 .header-lang-switcher {
-  position: fixed;
-  right: 12px;
-  top: 9px;
-  z-index: 1002;
+  position: relative;
+  margin-left: 8px;
+  flex-shrink: 0;
 }
 .header-lang-switcher .lang-btn {
   background: none;
@@ -1159,7 +1162,7 @@ i { font-style: normal; }
   font-size: 11px;
   color: var(--gold);
   white-space: nowrap;
-  max-width: 100px;
+  max-width: 85px;
   overflow: hidden;
   text-overflow: ellipsis;
   flex-shrink: 0;
