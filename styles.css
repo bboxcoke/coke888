@@ -86,6 +86,7 @@ i { font-style: normal; }
 
 .logo img {
   height: 28px;
+  max-height: 28px;
   width: auto;
   border-radius: 0;
   object-fit: contain;
