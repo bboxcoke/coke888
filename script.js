@@ -1429,6 +1429,7 @@ function updateAuthUI() {
     loginBtn.innerHTML = `<i class="fas fa-user"></i> ${user.username}`;
     loginBtn.onclick = () => navigateTo('user');
     balanceEl.style.display = 'flex';
+    balanceDisplay.textContent = formatBalance(user.balance || 0);
     
     // Side menu
     document.getElementById('sideUserName').textContent = user.username;
