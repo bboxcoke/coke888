@@ -1280,6 +1280,12 @@ function navigateTo(page) {
   // Scroll to top
   window.scrollTo({ top: 0, behavior: 'smooth' });
   
+  // Show/hide marquee based on page
+  const marquee = document.querySelector('.marquee-bar');
+  if (marquee) {
+    marquee.style.display = page === 'home' ? 'flex' : 'none';
+  }
+  
   // Render dynamic content on page entry
   if (page === 'slots') renderSlotList('all');
   if (page === 'fishing') renderFishList();
