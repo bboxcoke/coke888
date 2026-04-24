@@ -1420,14 +1420,19 @@ function sendCode() {
 // ===== Auth UI Updates =====
 function updateAuthUI() {
   const userData = localStorage.getItem('phoenix_user');
-  const loginBtn = document.getElementById('loginBtnHeader');
+  const headerGuest = document.getElementById('headerGuest');
+  const headerUser = document.getElementById('headerUser');
+  const userBtn = document.getElementById('userBtnHeader');
   const balanceEl = document.getElementById('userBalanceHeader');
   const balanceDisplay = document.getElementById('balanceDisplay');
   
   if (userData) {
     const user = JSON.parse(userData);
-    loginBtn.innerHTML = `<i class="fas fa-user"></i> ${user.username}`;
-    loginBtn.onclick = () => navigateTo('user');
+    // Show logged-in UI, hide guest UI
+    headerGuest.style.display = 'none';
+    headerUser.style.display = 'flex';
+    userBtn.innerHTML = `<i class="fas fa-user"></i> ${user.username}`;
+    userBtn.onclick = () => navigateTo('user');
     balanceEl.style.display = 'flex';
     balanceDisplay.textContent = formatBalance(user.balance || 0);
     
@@ -1440,8 +1445,9 @@ function updateAuthUI() {
     document.getElementById('userPhoneDisplay').textContent = user.phone || '-';
     document.getElementById('userBalanceAmount').textContent = formatBalance(user.balance || 0) + ' MMK';
   } else {
-    loginBtn.innerHTML = `<i class="fas fa-user"></i> ${t('login')}`;
-    loginBtn.onclick = () => navigateTo('login');
+    // Show guest UI, hide logged-in UI
+    headerGuest.style.display = 'flex';
+    headerUser.style.display = 'none';
     balanceEl.style.display = 'none';
     
     document.getElementById('sideUserName').textContent = t('not_logged_in');
@@ -1847,9 +1853,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const carousel = document.querySelector('.banner-carousel');
   if (carousel) { carousel.addEventListener('mouseenter', stopAutoSlide); carousel.addEventListener('mouseleave', startAutoSlide); }
   
-  // Side menu toggle
+  // Side menu toggle (via overlay only — menu button removed)
   document.getElementById('sideMenuOverlay').addEventListener('click', toggleMenu);
-  document.querySelector('.menu-btn').addEventListener('click', toggleMenu);
   
   // Update auth UI
   updateAuthUI();

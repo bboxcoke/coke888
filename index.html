@@ -12,20 +12,25 @@
 <!-- ===== Header ===== -->
 <header class="app-header">
   <div class="header-left">
-    <button class="menu-btn" onclick="toggleMenu()" aria-label="菜单">
-      <i class="fas fa-bars"></i>
-    </button>
     <div class="logo" onclick="navigateTo('home')">
       <img src="coke888-logo.svg" alt="Coke 888">
     </div>
   </div>
   <div class="header-right" id="headerRight">
-    <div class="user-balance" id="userBalanceHeader" style="display:none">
-      <img src="https://storage.googleapis.com/spacetech2/phoenix888/coin.png" class="coin-icon" onerror="this.style.display='none'">
-      <span id="balanceDisplay">0</span>
-      <span class="currency">MMK</span>
+    <!-- 未登录时显示 -->
+    <div class="header-guest" id="headerGuest">
+      <button class="login-btn register-btn" onclick="navigateTo('register')"><i class="fas fa-user-plus"></i> <span>注册</span></button>
+      <button class="login-btn" onclick="navigateTo('login')"><i class="fas fa-user"></i> <span data-i18n="login">登录</span></button>
     </div>
-    <button class="login-btn" id="loginBtnHeader" onclick="navigateTo('login')"><i class="fas fa-user"></i> <span data-i18n="login">登录</span></button>
+    <!-- 已登录时显示 -->
+    <div class="header-user" id="headerUser" style="display:none">
+      <div class="user-balance" id="userBalanceHeader" style="display:none">
+        <img src="https://storage.googleapis.com/spacetech2/phoenix888/coin.png" class="coin-icon" onerror="this.style.display='none'">
+        <span id="balanceDisplay">0</span>
+        <span class="currency">MMK</span>
+      </div>
+      <button class="login-btn user-btn" id="userBtnHeader"><i class="fas fa-user"></i> <span>账户</span></button>
+    </div>
     <div class="header-lang-switcher">
       <button class="lang-btn" onclick="toggleLangMenu()"><i class="fas fa-globe"></i></button>
       <div class="lang-dropdown" id="langDropdown">
