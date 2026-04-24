@@ -1255,7 +1255,7 @@ i { font-style: normal; }
 /* ===== Category Icons (home) ===== */
 .category-icons {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 6px;
   padding: 14px 10px;
 }
