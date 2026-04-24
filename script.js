@@ -1166,6 +1166,11 @@ function navigateTo(page) {
   initGamesOnNavigate(page);
 }
 
+// ===== Go Back =====
+function goBack() {
+  navigateTo('home');
+}
+
 // ===== Carousel =====
 let currentSlide = 0;
 const totalSlides = 3;
