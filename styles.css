@@ -111,6 +111,18 @@ i { font-style: normal; }
   overflow: visible;
 }
 
+.header-guest {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .login-btn {
   background: linear-gradient(135deg, var(--accent), #F5D76E);
   color: var(--text-primary);
