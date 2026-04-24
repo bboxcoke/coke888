@@ -1456,10 +1456,16 @@ function updateBalanceDisplays() {
   const userData = localStorage.getItem('phoenix_user');
   const balance = userData ? JSON.parse(userData).balance || 0 : 0;
   const formatted = formatBalance(balance) + ' MMK';
+  // 同步更新所有余额显示
+  const headerBalance = document.getElementById('balanceDisplay');
+  if (headerBalance) headerBalance.textContent = formatBalance(balance);
   document.getElementById('depBalance').textContent = formatted;
   document.getElementById('withBalance').textContent = formatted;
   document.getElementById('withAvailable').textContent = formatBalance(Math.min(balance, balance * 0.8)) + ' MMK';
   document.getElementById('withCurrentTurnover').textContent = formatBalance(Math.floor(balance * 2.5)) + ' MMK';
+  // 同时更新侧边栏和用户页
+  document.getElementById('userBalanceAmount').textContent = formatted;
+  document.getElementById('sideUserBalance').textContent = `余额: ${formatBalance(balance)} MMK`;
 }
 
 function handleLogout() {
