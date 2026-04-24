@@ -1294,6 +1294,9 @@ function navigateTo(page) {
   if (page === 'admin-login') {
     // Just show the page
   }
+  
+  // Init games when navigating to game pages
+  initGamesOnNavigate(page);
 }
 
 // ===== Carousel =====
@@ -2254,6 +2257,605 @@ function goBack() {
     navigateTo('user');
   } else {
     navigateTo('home');
+  }
+}
+
+// ===== GAME: Slot Machine =====
+// Slot state
+const slotState = {
+  balance: 1000,
+  bet: 10,
+  isSpinning: false,
+  symbols: ['🍒', '🍒', '🍒'], // current display
+  allSymbols: ['🍒', '🍒', '🔔', '⭐', '7️⃣', '💎'],
+  payouts: {
+    '🍒': 5,  // per matching symbol
+    '🔔': 20,
+    '⭐': 50,
+    '7️⃣': 100,
+    '💎': 300
+  }
+};
+
+function slotLoadBalance() {
+  const user = JSON.parse(localStorage.getItem('coke888_user'));
+  if (user && user.balance) {
+    slotState.balance = parseInt(user.balance) || 1000;
+  }
+  document.getElementById('slotBalance').textContent = slotState.balance;
+}
+
+function slotChangeBet(amount) {
+  if (slotState.isSpinning) return;
+  slotState.bet = Math.max(5, Math.min(100, slotState.bet + amount));
+  document.getElementById('slotBetAmount').textContent = slotState.bet;
+}
+
+function slotSpin() {
+  if (slotState.isSpinning) return;
+  if (slotState.balance < slotState.bet) {
+    document.getElementById('slotResultDisplay').textContent = '❌ 余额不足！';
+    return;
+  }
+
+  slotState.isSpinning = true;
+  const spinBtn = document.getElementById('slotSpinBtn');
+  spinBtn.disabled = true;
+  spinBtn.textContent = '⏳ 转动中...';
+  document.getElementById('slotResultDisplay').textContent = '';
+
+  // Deduct bet
+  slotState.balance -= slotState.bet;
+  document.getElementById('slotBalance').textContent = slotState.balance;
+
+  // Start spinning animation on all reels
+  const reels = ['reel0', 'reel1', 'reel2'];
+  reels.forEach(id => document.getElementById(id).classList.add('spinning'));
+
+  // Generate random results
+  const results = [];
+  for (let i = 0; i < 3; i++) {
+    const sym = slotState.allSymbols[Math.floor(Math.random() * slotState.allSymbols.length)];
+    results.push(sym);
+  }
+
+  // Stop reels one by one with delay (like real slot machine)
+  const stopReel = (idx, symbol) => {
+    const reel = document.getElementById(`reel${idx}`);
+    reel.classList.remove('spinning');
+    const symbols = reel.querySelectorAll('.slot-symbol');
+    symbols.forEach(s => { s.textContent = symbol; });
+  };
+
+  // Stop after delays
+  setTimeout(() => {
+    stopReel(0, results[0]);
+    setTimeout(() => {
+      stopReel(1, results[1]);
+      setTimeout(() => {
+        stopReel(2, results[2]);
+        // Check win
+        slotCheckWin(results);
+        slotState.isSpinning = false;
+        spinBtn.disabled = false;
+        spinBtn.textContent = '🎰 SPIN';
+        // Update user balance
+        const user = JSON.parse(localStorage.getItem('coke888_user'));
+        if (user) {
+          user.balance = slotState.balance;
+          localStorage.setItem('coke888_user', JSON.stringify(user));
+          updateAuthUI();
+        }
+      }, 400);
+    }, 400);
+  }, 600);
+}
+
+function slotCheckWin(results) {
+  const resultDiv = document.getElementById('slotResultDisplay');
+  
+  // Check if all 3 match (jackpot)
+  if (results[0] === results[1] && results[1] === results[2]) {
+    const symbol = results[0];
+    const multiplier = slotState.payouts[symbol] || 5;
+    const winAmount = slotState.bet * multiplier;
+    slotState.balance += winAmount;
+    document.getElementById('slotBalance').textContent = slotState.balance;
+    resultDiv.textContent = `🎉 JACKPOT! ${symbol}x3 = ${winAmount}!`;
+    resultDiv.style.color = '#ffd700';
+    return;
+  }
+  
+  // Check for pairs
+  const counts = {};
+  results.forEach(s => { counts[s] = (counts[s] || 0) + 1; });
+  
+  let winAmount = 0;
+  let winDesc = '';
+  
+  for (const [symbol, count] of Object.entries(counts)) {
+    if (count >= 2) {
+      const multiplier = (slotState.payouts[symbol] || 5) * (count - 1);
+      const amount = slotState.bet * multiplier;
+      winAmount += amount;
+      winDesc += `${symbol}x${count}=${amount} `;
+    }
+  }
+  
+  if (winAmount > 0) {
+    slotState.balance += winAmount;
+    document.getElementById('slotBalance').textContent = slotState.balance;
+    resultDiv.textContent = `🎊 赢了 ${winAmount}! (${winDesc})`;
+    resultDiv.style.color = '#4ecdc4';
+  } else {
+    resultDiv.textContent = '😢 没中奖，再试试！';
+    resultDiv.style.color = '#e94560';
+  }
+}
+
+// ===== GAME: Fishing =====
+const fishState = {
+  ammo: 100,
+  score: 0,
+  balance: 1000,
+  fishList: [],
+  bullets: [],
+  cannonX: 190, // center of canvas
+  animFrame: null,
+  fishSpawnTimer: null
+};
+
+function fishInit() {
+  const canvas = document.getElementById('fishingCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  // Load balance
+  const user = JSON.parse(localStorage.getItem('coke888_user'));
+  if (user && user.balance) fishState.balance = parseInt(user.balance) || 1000;
+  document.getElementById('fishBalance').textContent = fishState.balance;
+  document.getElementById('fishScore').textContent = fishState.score;
+  
+  fishState.ammo = 100;
+  document.getElementById('fishAmmo').textContent = fishState.ammo;
+  
+  // Clear existing interval
+  if (fishState.fishSpawnTimer) clearInterval(fishState.fishSpawnTimer);
+  if (fishState.animFrame) cancelAnimationFrame(fishState.animFrame);
+  
+  // Start game loop
+  fishState.fishList = [];
+  fishState.bullets = [];
+  fishState.cannonX = 190;
+  
+  // Spawn fish periodically
+  fishState.fishSpawnTimer = setInterval(() => {
+    if (document.querySelector('.page[data-page="fishing"].active')) {
+      fishSpawnFish();
+    }
+  }, 1500);
+  
+  // Spawn initial fish
+  for (let i = 0; i < 5; i++) fishSpawnFish();
+  
+  function gameLoop() {
+    if (!document.querySelector('.page[data-page="fishing"].active')) return;
+    fishUpdate(ctx);
+    fishState.animFrame = requestAnimationFrame(gameLoop);
+  }
+  gameLoop();
+  
+  // Button controls
+  document.getElementById('fishLeftBtn').onclick = () => { fishState.cannonX = Math.max(20, fishState.cannonX - 30); };
+  document.getElementById('fishRightBtn').onclick = () => { fishState.cannonX = Math.min(360, fishState.cannonX + 30); };
+}
+
+function fishSpawnFish() {
+  const types = [
+    { emoji: '🐟', value: 5, w: 30, speed: 0.5 + Math.random() * 1.5 },
+    { emoji: '🐠', value: 10, w: 28, speed: 0.4 + Math.random() * 1.2 },
+    { emoji: '🐡', value: 15, w: 32, speed: 0.3 + Math.random() * 1.0 },
+    { emoji: '🐙', value: 25, w: 36, speed: 0.2 + Math.random() * 0.8 },
+    { emoji: '🦈', value: 50, w: 44, speed: 0.1 + Math.random() * 0.6 },
+  ];
+  const type = types[Math.floor(Math.random() * types.length)];
+  fishState.fishList.push({
+    ...type,
+    x: Math.random() > 0.5 ? 400 : -40,
+    y: 30 + Math.random() * 440,
+    dir: Math.random() > 0.5 ? 1 : -1,
+    alive: true,
+  });
+}
+
+function fishShoot() {
+  if (fishState.ammo <= 0) return;
+  fishState.ammo--;
+  document.getElementById('fishAmmo').textContent = fishState.ammo;
+  fishState.bullets.push({
+    x: fishState.cannonX,
+    y: 490,
+    r: 4,
+    speed: 6
+  });
+}
+
+function fishUpdate(ctx) {
+  const w = 380, h = 500;
+  
+  // Clear canvas with ocean background
+  const grad = ctx.createLinearGradient(0, 0, 0, h);
+  grad.addColorStop(0, '#0a1628');
+  grad.addColorStop(0.5, '#0d2137');
+  grad.addColorStop(1, '#05101a');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+  
+  // Draw underwater bubbles
+  ctx.fillStyle = 'rgba(255,255,255,0.05)';
+  for (let i = 0; i < 20; i++) {
+    const bx = (Math.sin(Date.now()/2000 + i*100) * 50 + 50) + i * 15;
+    const by = (Date.now()/100 + i * 50) % h;
+    const br = 2 + Math.sin(i) * 2;
+    ctx.beginPath();
+    ctx.arc(bx % w, by, br, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  
+  // Draw and update fish
+  fishState.fishList = fishState.fishList.filter(f => {
+    if (!f.alive) return false;
+    f.x += f.speed * f.dir;
+    if (f.x < -50 || f.x > 410) return false;
+    
+    ctx.font = `${f.w}px serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    if (f.dir > 0) {
+      ctx.save();
+      ctx.scale(-1, 1);
+      ctx.fillText(f.emoji, -f.x, f.y);
+      ctx.restore();
+    } else {
+      ctx.fillText(f.emoji, f.x, f.y);
+    }
+    return true;
+  });
+  
+  // Draw cannon
+  ctx.fillStyle = '#D4A843';
+  ctx.shadowColor = '#D4A843';
+  ctx.shadowBlur = 10;
+  ctx.beginPath();
+  ctx.arc(fishState.cannonX, 485, 14, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#F5D76E';
+  ctx.shadowBlur = 0;
+  ctx.font = '18px serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('🔫', fishState.cannonX, 487);
+  
+  // Draw and update bullets
+  fishState.bullets = fishState.bullets.filter(b => {
+    b.y -= b.speed;
+    if (b.y < 0) return false;
+    
+    // Check collision with fish
+    for (const fish of fishState.fishList) {
+      if (!fish.alive) continue;
+      const dx = b.x - fish.x;
+      const dy = b.y - fish.y;
+      if (Math.abs(dx) < fish.w && Math.abs(dy) < fish.w) {
+        // Hit!
+        fish.alive = false;
+        fishState.score += fish.value;
+        fishState.balance += fish.value;
+        document.getElementById('fishScore').textContent = fishState.score;
+        document.getElementById('fishBalance').textContent = fishState.balance;
+        // Explosion effect
+        ctx.fillStyle = '#ffd700';
+        ctx.beginPath();
+        ctx.arc(fish.x, fish.y, 20, 0, Math.PI * 2);
+        ctx.fill();
+        // Update user
+        const user = JSON.parse(localStorage.getItem('coke888_user'));
+        if (user) {
+          user.balance = fishState.balance;
+          localStorage.setItem('coke888_user', JSON.stringify(user));
+          updateAuthUI();
+        }
+        return false;
+      }
+    }
+    
+    // Draw bullet
+    ctx.fillStyle = '#ff4444';
+    ctx.shadowColor = '#ff4444';
+    ctx.shadowBlur = 8;
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    return true;
+  });
+  
+  // Draw cannon aim line
+  ctx.strokeStyle = 'rgba(212,168,67,0.3)';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  ctx.moveTo(fishState.cannonX, 475);
+  ctx.lineTo(fishState.cannonX, 20);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  
+  // Ammo auto-regen
+  if (fishState.ammo < 100 && Math.random() < 0.02) {
+    fishState.ammo++;
+    document.getElementById('fishAmmo').textContent = fishState.ammo;
+  }
+}
+
+// ===== GAME: Arcade Shooter =====
+const arcadeState = {
+  score: 0,
+  lives: 3,
+  level: 1,
+  playerX: 190,
+  enemies: [],
+  bullets: [],
+  stars: [],
+  animFrame: null,
+  enemyTimer: null,
+  keys: { left: false, right: false, fire: false }
+};
+
+function arcadeInit() {
+  const canvas = document.getElementById('arcadeCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  arcadeState.score = 0;
+  arcadeState.lives = 3;
+  arcadeState.level = 1;
+  arcadeState.playerX = 190;
+  arcadeState.enemies = [];
+  arcadeState.bullets = [];
+  arcadeState.stars = [];
+  arcadeState.keys = { left: false, right: false, fire: false };
+  
+  document.getElementById('arcadeScore').textContent = 0;
+  document.getElementById('arcadeLives').textContent = 3;
+  document.getElementById('arcadeLevel').textContent = 1;
+  
+  // Clear old timers
+  if (arcadeState.enemyTimer) clearInterval(arcadeState.enemyTimer);
+  if (arcadeState.animFrame) cancelAnimationFrame(arcadeState.animFrame);
+  
+  // Background stars
+  for (let i = 0; i < 50; i++) {
+    arcadeState.stars.push({
+      x: Math.random() * 380,
+      y: Math.random() * 500,
+      speed: 0.3 + Math.random() * 0.5,
+      size: 0.5 + Math.random() * 1.5
+    });
+  }
+  
+  // Enemy spawn
+  arcadeState.enemyTimer = setInterval(() => {
+    if (document.querySelector('.page[data-page="arcade"].active')) {
+      arcadeSpawnEnemy();
+    }
+  }, 1200);
+  
+  for (let i = 0; i < 3; i++) arcadeSpawnEnemy();
+  
+  function gameLoop() {
+    if (!document.querySelector('.page[data-page="arcade"].active')) return;
+    // Handle key states
+    if (arcadeState.keys.left) arcadeState.playerX = Math.max(20, arcadeState.playerX - 4);
+    if (arcadeState.keys.right) arcadeState.playerX = Math.min(360, arcadeState.playerX + 4);
+    if (arcadeState.keys.fire) {
+      arcadeState.keys.fire = false;
+      arcadeFire();
+    }
+    arcadeUpdate(ctx);
+    arcadeState.animFrame = requestAnimationFrame(gameLoop);
+  }
+  gameLoop();
+  
+  // Controls
+  document.getElementById('arcLeftBtn').onpointerdown = () => { arcadeState.keys.left = true; };
+  document.getElementById('arcLeftBtn').onpointerup = () => { arcadeState.keys.left = false; };
+  document.getElementById('arcLeftBtn').onpointerleave = () => { arcadeState.keys.left = false; };
+  document.getElementById('arcRightBtn').onpointerdown = () => { arcadeState.keys.right = true; };
+  document.getElementById('arcRightBtn').onpointerup = () => { arcadeState.keys.right = false; };
+  document.getElementById('arcRightBtn').onpointerleave = () => { arcadeState.keys.right = false; };
+  document.getElementById('arcFireBtn').onclick = () => { arcadeFire(); };
+  
+  // Keyboard
+  document.addEventListener('keydown', arcadeKeyDown);
+  document.addEventListener('keyup', arcadeKeyUp);
+}
+
+function arcadeKeyDown(e) {
+  if (e.key === 'ArrowLeft') arcadeState.keys.left = true;
+  if (e.key === 'ArrowRight') arcadeState.keys.right = true;
+  if (e.key === ' ' || e.key === 'ArrowUp') { e.preventDefault(); arcadeFire(); }
+}
+
+function arcadeKeyUp(e) {
+  if (e.key === 'ArrowLeft') arcadeState.keys.left = false;
+  if (e.key === 'ArrowRight') arcadeState.keys.right = false;
+}
+
+function arcadeSpawnEnemy() {
+  const types = ['👾', '👽', '🤖', '👻', '🛸'];
+  const type = types[Math.floor(Math.random() * types.length)];
+  const speedMultiplier = 1 + (arcadeState.level - 1) * 0.3;
+  arcadeState.enemies.push({
+    emoji: type,
+    x: 20 + Math.random() * 340,
+    y: -30,
+    w: 24 + Math.random() * 8,
+    speedY: (1 + Math.random() * 1.5) * speedMultiplier,
+    speedX: (Math.random() - 0.5) * 0.5,
+    health: arcadeState.level > 2 && Math.random() > 0.7 ? 2 : 1
+  });
+}
+
+function arcadeFire() {
+  arcadeState.bullets.push({
+    x: arcadeState.playerX,
+    y: 450,
+    speed: 7
+  });
+}
+
+function arcadeUpdate(ctx) {
+  const w = 380, h = 500;
+  
+  // Background
+  ctx.fillStyle = '#0a0a1a';
+  ctx.fillRect(0, 0, w, h);
+  
+  // Stars (scrolling)
+  for (const star of arcadeState.stars) {
+    star.y += star.speed;
+    if (star.y > h) { star.y = 0; star.x = Math.random() * w; }
+    ctx.fillStyle = `rgba(255,255,255,${0.3 + Math.random() * 0.7})`;
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  
+  // Update and draw enemies
+  arcadeState.enemies = arcadeState.enemies.filter(e => {
+    if (e.health <= 0) return false;
+    e.y += e.speedY;
+    e.x += e.speedX;
+    
+    // Bounce off walls
+    if (e.x < 10) e.speedX = Math.abs(e.speedX);
+    if (e.x > w - 10) e.speedX = -Math.abs(e.speedX);
+    
+    // Check if reached player
+    if (e.y > 460) {
+      arcadeState.lives--;
+      document.getElementById('arcadeLives').textContent = arcadeState.lives;
+      if (arcadeState.lives <= 0) {
+        arcadeGameOver(ctx);
+        return false;
+      }
+      return false;
+    }
+    
+    ctx.font = `${e.w}px serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText(e.emoji, e.x, e.y);
+    return true;
+  });
+  
+  // Update and draw bullets
+  arcadeState.bullets = arcadeState.bullets.filter(b => {
+    b.y -= b.speed;
+    if (b.y < 0) return false;
+    
+    // Check collision
+    for (const enemy of arcadeState.enemies) {
+      if (enemy.health <= 0) continue;
+      const dx = b.x - enemy.x;
+      const dy = b.y - enemy.y;
+      if (Math.abs(dx) < enemy.w && Math.abs(dy) < enemy.w) {
+        enemy.health--;
+        arcadeState.score += 10 * arcadeState.level;
+        document.getElementById('arcadeScore').textContent = arcadeState.score;
+        
+        // Level up every 100 points
+        if (arcadeState.score >= arcadeState.level * 100) {
+          arcadeState.level++;
+          document.getElementById('arcadeLevel').textContent = arcadeState.level;
+          // Spawn more enemies per level
+          for (let i = 0; i < arcadeState.level; i++) arcadeSpawnEnemy();
+        }
+        
+        // Explosion
+        ctx.fillStyle = '#ffd700';
+        ctx.beginPath();
+        ctx.arc(enemy.x, enemy.y, 12, 0, Math.PI * 2);
+        ctx.fill();
+        
+        return false;
+      }
+    }
+    
+    // Draw bullet
+    ctx.fillStyle = '#00ff88';
+    ctx.shadowColor = '#00ff88';
+    ctx.shadowBlur = 8;
+    ctx.fillRect(b.x - 2, b.y - 6, 4, 12);
+    ctx.shadowBlur = 0;
+    return true;
+  });
+  
+  // Draw player ship
+  ctx.shadowColor = '#00ccff';
+  ctx.shadowBlur = 15;
+  ctx.fillStyle = '#00ccff';
+  ctx.beginPath();
+  ctx.moveTo(arcadeState.playerX, 460);
+  ctx.lineTo(arcadeState.playerX - 16, 490);
+  ctx.lineTo(arcadeState.playerX + 16, 490);
+  ctx.closePath();
+  ctx.fill();
+  // Ship glow
+  ctx.fillStyle = 'rgba(0, 204, 255, 0.3)';
+  ctx.beginPath();
+  ctx.moveTo(arcadeState.playerX, 455);
+  ctx.lineTo(arcadeState.playerX - 20, 492);
+  ctx.lineTo(arcadeState.playerX + 20, 492);
+  ctx.closePath();
+  ctx.fill();
+  ctx.shadowBlur = 0;
+}
+
+function arcadeGameOver(ctx) {
+  ctx.fillStyle = 'rgba(0,0,0,0.7)';
+  ctx.fillRect(0, 0, 380, 500);
+  ctx.fillStyle = '#e94560';
+  ctx.font = '36px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('GAME OVER', 190, 200);
+  ctx.fillStyle = '#fff';
+  ctx.font = '20px sans-serif';
+  ctx.fillText(`得分: ${arcadeState.score}  |  级别: ${arcadeState.level}`, 190, 250);
+  ctx.fillStyle = '#D4A843';
+  ctx.font = '16px sans-serif';
+  ctx.fillText('点击返回重新开始', 190, 310);
+  
+  // Stop spawning
+  if (arcadeState.enemyTimer) clearInterval(arcadeState.enemyTimer);
+  if (arcadeState.animFrame) cancelAnimationFrame(arcadeState.animFrame);
+  
+  // Clean up keyboard listeners
+  document.removeEventListener('keydown', arcadeKeyDown);
+  document.removeEventListener('keyup', arcadeKeyUp);
+}
+
+// ===== Game Initialization on Page Navigate =====
+function initGamesOnNavigate(page) {
+  if (page === 'slots') {
+    setTimeout(() => {
+      slotLoadBalance();
+      document.getElementById('slotResultDisplay').textContent = '';
+    }, 50);
+  }
+  if (page === 'fishing') {
+    setTimeout(fishInit, 100);
+  }
+  if (page === 'arcade') {
+    setTimeout(arcadeInit, 100);
   }
 }
 

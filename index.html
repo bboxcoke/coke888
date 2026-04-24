@@ -60,6 +60,7 @@
     <a onclick="toggleMenu(); navigateTo('home')"><i class="fas fa-home"></i> <span data-i18n="menu_home">首页</span></a>
     <a onclick="toggleMenu(); navigateTo('slots')"><i class="fas fa-dice"></i> <span data-i18n="menu_slots">老虎机</span></a>
     <a onclick="toggleMenu(); navigateTo('fishing')"><i class="fas fa-fish"></i> <span data-i18n="menu_fishing">捕鱼游戏</span></a>
+    <a onclick="toggleMenu(); navigateTo('arcade')"><i class="fas fa-gamepad"></i> <span data-i18n="menu_arcade">街机游戏</span></a>
     <a onclick="toggleMenu(); navigateTo('deposit')"><i class="fas fa-wallet"></i> <span data-i18n="menu_deposit">充值</span></a>
     <a onclick="toggleMenu(); navigateTo('withdraw')"><i class="fas fa-money-bill-wave"></i> <span data-i18n="menu_withdraw">提现</span></a>
     <a onclick="toggleMenu(); navigateTo('transactions')"><i class="fas fa-exchange-alt"></i> <span data-i18n="menu_transactions">交易记录</span></a>
@@ -129,7 +130,7 @@
       <div class="cat-icon" style="background:linear-gradient(135deg,#3498db,#85c1e9)"><i class="fas fa-fish"></i></div>
       <span data-i18n="fishing">捕鱼游戏</span>
     </div>
-    <div class="cat-item">
+    <div class="cat-item" onclick="navigateTo('arcade')">
       <div class="cat-icon" style="background:linear-gradient(135deg,#2ecc71,#82e0aa)"><i class="fas fa-gamepad"></i></div>
       <span data-i18n="arcade">街机游戏</span>
     </div>
@@ -450,32 +451,85 @@
   </div>
 </div>
 
-<!-- ===== PAGE: Slots ===== -->
-<div class="page" data-page="slots">
-  <div class="list-page">
-    <div class="page-top">
-      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
-      <h3 class="page-title" data-i18n="slots_page_title">老虎机</h3>
+<!-- ===== PAGE: Slots (可玩老虎机游戏) ===== -->
+<div class="page game-page" data-page="slots">
+  <div class="page-top">
+    <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+    <h3 class="page-title">🎰 老虎机</h3>
+  </div>
+  <div class="slot-game-container">
+    <div class="slot-info-bar">
+      <div class="slot-balance">💰 <span id="slotBalance">1000</span></div>
+      <div class="slot-bet">
+        下注: <span id="slotBetAmount">10</span>
+        <div class="bet-controls">
+          <button class="bet-btn" onclick="slotChangeBet(-5)">-</button>
+          <button class="bet-btn" onclick="slotChangeBet(5)">+</button>
+        </div>
+      </div>
+      <div class="slot-win" id="slotWinDisplay"></div>
     </div>
-    <div class="provider-tabs" id="slotTabs">
-      <span class="provider-tab active" onclick="filterSlots(this,'all')" data-i18n="slots_all">全部</span>
-      <span class="provider-tab" onclick="filterSlots(this,'jdb')">JDB</span>
-      <span class="provider-tab" onclick="filterSlots(this,'jili')">Jili</span>
-      <span class="provider-tab" onclick="filterSlots(this,'pg')">PG</span>
-      <span class="provider-tab" onclick="filterSlots(this,'pp')">PP</span>
+    <div class="slot-machine">
+      <div class="slot-reels" id="slotReels">
+        <div class="reel" id="reel0"><div class="slot-symbol">🍒</div><div class="slot-symbol">🍒</div><div class="slot-symbol">🍒</div></div>
+        <div class="reel" id="reel1"><div class="slot-symbol">🍒</div><div class="slot-symbol">🍒</div><div class="slot-symbol">🍒</div></div>
+        <div class="reel" id="reel2"><div class="slot-symbol">🍒</div><div class="slot-symbol">🍒</div><div class="slot-symbol">🍒</div></div>
+      </div>
+      <div class="slot-paylines">
+        <span>🍒x3=50 &nbsp; 🔔x3=100 &nbsp; ⭐x3=200 &nbsp; 7️⃣x3=500 &nbsp; 💎x3=1000</span>
+      </div>
     </div>
-    <div class="game-grid" id="slotListGrid"></div>
+    <button class="slot-spin-btn" id="slotSpinBtn" onclick="slotSpin()">🎰 SPIN</button>
+    <div class="slot-result" id="slotResultDisplay"></div>
   </div>
 </div>
 
-<!-- ===== PAGE: Fishing ===== -->
-<div class="page" data-page="fishing">
-  <div class="list-page">
-    <div class="page-top">
-      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
-      <h3 class="page-title" data-i18n="fishing_page_title">捕鱼游戏</h3>
+<!-- ===== PAGE: Fishing (可玩捕鱼游戏) ===== -->
+<div class="page game-page" data-page="fishing">
+  <div class="page-top">
+    <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+    <h3 class="page-title">🐟 捕鱼游戏</h3>
+  </div>
+  <div class="fishing-game-container">
+    <div class="fishing-info-bar">
+      <div class="slot-balance">💰 <span id="fishBalance">1000</span></div>
+      <div class="slot-bet">
+        子弹: <span id="fishAmmo">100</span>
+        <button class="bet-btn" style="margin-left:6px" onclick="fishShoot()">🎯 开火</button>
+      </div>
+      <div class="slot-win" id="fishScoreDisplay">得分: <span id="fishScore">0</span></div>
     </div>
-    <div class="game-grid" id="fishListGrid"></div>
+    <div class="fishing-canvas-wrap">
+      <canvas id="fishingCanvas" width="380" height="500"></canvas>
+    </div>
+    <div class="fishing-controls">
+      <button class="fish-btn" id="fishLeftBtn">◀ 左</button>
+      <button class="fish-btn" id="fishFireBtn" onclick="fishShoot()">🔥 开火</button>
+      <button class="fish-btn" id="fishRightBtn">右 ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: Arcade (可玩街机游戏) ===== -->
+<div class="page game-page" data-page="arcade">
+  <div class="page-top">
+    <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+    <h3 class="page-title">👾 街机射击</h3>
+  </div>
+  <div class="arcade-game-container">
+    <div class="arcade-info-bar">
+      <div class="slot-balance">💥 得分: <span id="arcadeScore">0</span></div>
+      <div class="slot-bet">❤️ 生命: <span id="arcadeLives">3</span></div>
+      <div class="slot-win">级别: <span id="arcadeLevel">1</span></div>
+    </div>
+    <div class="arcade-canvas-wrap">
+      <canvas id="arcadeCanvas" width="380" height="500"></canvas>
+    </div>
+    <div class="arcade-controls">
+      <button class="fish-btn" id="arcLeftBtn">◀ 左</button>
+      <button class="fish-btn" id="arcFireBtn">🔫 射击</button>
+      <button class="fish-btn" id="arcRightBtn">右 ▶</button>
+    </div>
   </div>
 </div>
 
