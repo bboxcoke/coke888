@@ -1,0 +1,20 @@
+{
+  "name": "coke888",
+  "version": "1.0.0",
+  "description": "Coke 888 Online Entertainment Platform",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "build": "echo 'Static site - no build required'"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "sql.js": "^1.14.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

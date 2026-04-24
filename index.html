@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Coke 888 | 最佳线上娱乐</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="app-header">
+  <div class="header-left">
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="菜单">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="logo" onclick="navigateTo('home')">
+      <img src="coke888-logo.svg" alt="Coke 888" style="height:44px;width:auto;margin-top:-2px">
+    </div>
+  </div>
+  <div class="header-right" id="headerRight">
+    <div class="user-balance" id="userBalanceHeader" style="display:none">
+      <img src="https://storage.googleapis.com/spacetech2/phoenix888/coin.png" class="coin-icon" onerror="this.style.display='none'">
+      <span id="balanceDisplay">0</span>
+      <span class="currency">MMK</span>
+    </div>
+    <button class="login-btn" id="loginBtnHeader" onclick="navigateTo('login')">
+      <i class="fas fa-user"></i> <span data-i18n="login">登录</span>
+    </button>
+    <div class="header-lang-switcher">
+      <button class="lang-btn" onclick="toggleLangMenu()"><i class="fas fa-globe"></i></button>
+      <div class="lang-dropdown" id="langDropdown">
+        <a onclick="switchLang('cn')">🇨🇳 中文</a>
+        <a onclick="switchLang('en')">🇬🇧 English</a>
+        <a onclick="switchLang('mm')">🇲🇲 မြန်မာ</a>
+        <a onclick="switchLang('th')">🇹🇭 ไทย</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Side Menu ===== -->
+<div class="side-overlay" id="sideMenuOverlay" onclick="toggleMenu()"></div>
+<div class="side-menu" id="sideMenu">
+  <div class="side-header">
+    <div class="side-user">
+      <div class="side-avatar"><i class="fas fa-user-circle"></i></div>
+      <div class="side-user-info">
+        <div class="side-user-name" id="sideUserName" data-i18n="not_logged_in">未登录</div>
+        <div class="side-user-balance" id="sideUserBalance"><span data-i18n="balance">余额</span>: 0 MMK</div>
+      </div>
+    </div>
+    <button class="side-close" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="side-links">
+    <a onclick="toggleMenu(); navigateTo('home')"><i class="fas fa-home"></i> <span data-i18n="menu_home">首页</span></a>
+    <a onclick="toggleMenu(); navigateTo('slots')"><i class="fas fa-dice"></i> <span data-i18n="menu_slots">老虎机</span></a>
+    <a onclick="toggleMenu(); navigateTo('fishing')"><i class="fas fa-fish"></i> <span data-i18n="menu_fishing">捕鱼游戏</span></a>
+    <a onclick="toggleMenu(); navigateTo('deposit')"><i class="fas fa-wallet"></i> <span data-i18n="menu_deposit">充值</span></a>
+    <a onclick="toggleMenu(); navigateTo('withdraw')"><i class="fas fa-money-bill-wave"></i> <span data-i18n="menu_withdraw">提现</span></a>
+    <a onclick="toggleMenu(); navigateTo('transactions')"><i class="fas fa-exchange-alt"></i> <span data-i18n="menu_transactions">交易记录</span></a>
+    <a onclick="toggleMenu(); navigateTo('promotions')"><i class="fas fa-gift"></i> <span data-i18n="menu_promotions">优惠活动</span></a>
+    <a onclick="toggleMenu(); navigateTo('user')"><i class="fas fa-user-cog"></i> <span data-i18n="menu_user">个人中心</span></a>
+    <a onclick="toggleMenu(); navigateTo('contact')"><i class="fas fa-headset"></i> <span data-i18n="menu_contact">联系客服</span></a>
+    <a onclick="toggleMenu(); navigateTo('settings')"><i class="fas fa-cog"></i> <span data-i18n="menu_settings">设置</span></a>
+    <a onclick="navigateTo('admin-login'); toggleMenu();" class="text-success"><i class="fas fa-shield-alt"></i> <span data-i18n="menu_admin">后台管理</span></a>
+  </div>
+  <div class="side-footer">
+    <img src="https://storage.googleapis.com/spacetech2/phoenix888/smt233_download.png" alt="下载APP" style="width:100%;border-radius:8px" onerror="this.style.display='none'">
+  </div>
+</div>
+
+<!-- ===== Marquee ===== -->
+<div class="marquee-bar">
+  <div class="marquee-icon"><i class="fas fa-bullhorn"></i></div>
+  <div class="marquee-text">
+    <span>🎉 欢迎来到 Coke 888！新用户注册即送 100% 首存红利！每日返水高达 1.5%！VIP专属福利等你来拿！</span>
+  </div>
+</div>
+
+<!-- ===== PAGE: Home ===== -->
+<div class="page active" data-page="home">
+
+  <!-- Banner Carousel -->
+  <div class="banner-carousel">
+    <div class="carousel-inner">
+      <div class="carousel-slide active" style="background:linear-gradient(135deg,#e94560,#c23152)">
+        <div class="banner-content">
+          <h2>首存红利</h2>
+          <p>首次存款 100% 奖励<br>最高 500,000 MMK</p>
+          <span class="banner-cta">立即领取</span>
+        </div>
+      </div>
+      <div class="carousel-slide" style="background:linear-gradient(135deg,#0f3460,#1a5276)">
+        <div class="banner-content">
+          <h2>每日返水</h2>
+          <p>每日最高 1.5% 返水<br>不限游戏种类</p>
+          <span class="banner-cta">查看详情</span>
+        </div>
+      </div>
+      <div class="carousel-slide" style="background:linear-gradient(135deg,#8e44ad,#6c3483)">
+        <div class="banner-content">
+          <h2>VIP俱乐部</h2>
+          <p>尊享专属特权<br>更高返水、更快提款</p>
+          <span class="banner-cta">升级VIP</span>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-btn carousel-prev" onclick="prevSlide()">&#10094;</button>
+    <button class="carousel-btn carousel-next" onclick="nextSlide()">&#10095;</button>
+    <div class="carousel-indicators">
+      <span class="indicator active" data-index="0"></span>
+      <span class="indicator" data-index="1"></span>
+      <span class="indicator" data-index="2"></span>
+    </div>
+  </div>
+
+  <!-- Category Icons -->
+  <div class="category-icons">
+    <div class="cat-item" onclick="navigateTo('slots')">
+      <div class="cat-icon" style="background:linear-gradient(135deg,#e94560,#ff6b6b)"><i class="fas fa-dice"></i></div>
+      <span data-i18n="slots">老虎机</span>
+    </div>
+    <div class="cat-item" onclick="navigateTo('fishing')">
+      <div class="cat-icon" style="background:linear-gradient(135deg,#3498db,#85c1e9)"><i class="fas fa-fish"></i></div>
+      <span data-i18n="fishing">捕鱼游戏</span>
+    </div>
+    <div class="cat-item">
+      <div class="cat-icon" style="background:linear-gradient(135deg,#2ecc71,#82e0aa)"><i class="fas fa-gamepad"></i></div>
+      <span data-i18n="arcade">街机游戏</span>
+    </div>
+    <div class="cat-item" onclick="navigateTo('promotions')">
+      <div class="cat-icon" style="background:linear-gradient(135deg,#f39c12,#f7dc6f)"><i class="fas fa-gift"></i></div>
+      <span data-i18n="promotions">优惠活动</span>
+    </div>
+    <div class="cat-item" onclick="navigateTo('deposit')">
+      <div class="cat-icon" style="background:linear-gradient(135deg,#e74c3c,#f1948a)"><i class="fas fa-wallet"></i></div>
+      <span data-i18n="deposit">充值</span>
+    </div>
+    <div class="cat-item">
+      <div class="cat-icon" style="background:linear-gradient(135deg,#9b59b6,#c39bd3)"><i class="fas fa-users"></i></div>
+      <span data-i18n="menu_friends">推荐好友</span>
+    </div>
+    <a onclick="navigateTo('admin-login')" style="text-decoration:none">
+      <div class="cat-item">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#27ae60,#2ecc71)"><i class="fas fa-shield-alt"></i></div>
+        <span style="color:#27ae60;font-weight:bold">后台管理</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Game Sections -->
+  <div class="game-section">
+    <div class="section-header">
+      <h3><i class="fas fa-fire" style="color:#e94560"></i> <span data-i18n="hot_slots">热门老虎机</span></h3>
+      <a onclick="navigateTo('slots')" class="see-all"><span data-i18n="view_all">查看全部</span> <i class="fas fa-chevron-right"></i></a>
+    </div>
+    <div class="game-grid" id="slotGames"></div>
+  </div>
+
+  <div class="game-section">
+    <div class="section-header">
+      <h3><i class="fas fa-fish" style="color:#3498db"></i> <span data-i18n="fishing_games">捕鱼游戏</span></h3>
+      <a onclick="navigateTo('fishing')" class="see-all"><span data-i18n="view_all">查看全部</span> <i class="fas fa-chevron-right"></i></a>
+    </div>
+    <div class="game-grid" id="fishGames"></div>
+  </div>
+
+  <div class="game-section">
+    <div class="section-header">
+      <h3><i class="fas fa-gamepad" style="color:#2ecc71"></i> <span data-i18n="arcade_games">街机游戏</span></h3>
+      <a onclick="navigateTo('fishing')" class="see-all"><span data-i18n="view_all">查看全部</span> <i class="fas fa-chevron-right"></i></a>
+    </div>
+    <div class="game-grid" id="arcadeGames"></div>
+  </div>
+
+</div>
+
+<!-- ===== PAGE: Login ===== -->
+<div class="page" data-page="login">
+  <div class="auth-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h3 class="page-title" data-i18n="login_welcome">欢迎回来</h3>
+    </div>
+    <div class="auth-box">
+      <div class="auth-logo">
+        <img src="coke888-logo.svg" alt="Coke 888" style="height:80px;width:auto">
+        <p data-i18n="login_subtitle">请登录您的账户</p>
+      </div>
+      <form onsubmit="event.preventDefault(); handleLogin()">
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> <span data-i18n="login_username_label">用户名</span></label>
+          <input type="text" id="loginUsername" data-i18n-placeholder="login_username_placeholder" placeholder="请输入用户名" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-lock"></i> <span data-i18n="login_password_label">密码</span></label>
+          <input type="password" id="loginPassword" data-i18n-placeholder="login_password_placeholder" placeholder="请输入密码" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" data-i18n="login_btn">登录</button>
+        <div class="auth-links">
+          <a onclick="navigateTo('register')" data-i18n="login_register_link">还没有账号？立即注册</a>
+          <a href="#" onclick="event.preventDefault(); showForgotPwdModal()" data-i18n="login_forgot_link">忘记密码？</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: Register ===== -->
+<div class="page" data-page="register">
+  <div class="auth-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h3 class="page-title" data-i18n="reg_title">注册新账号</h3>
+    </div>
+    <div class="auth-box">
+      <div class="auth-logo">
+        <img src="coke888-logo.svg" alt="Coke 888" style="height:80px;width:auto">
+        <p data-i18n="reg_subtitle">立即加入赢取大奖</p>
+      </div>
+      <form onsubmit="event.preventDefault(); handleRegister()">
+        <div class="form-group">
+          <label><i class="fas fa-phone"></i> <span data-i18n="reg_phone_label">手机号</span></label>
+          <input type="tel" id="regPhone" data-i18n-placeholder="reg_phone_placeholder" placeholder="请输入手机号" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> <span data-i18n="reg_username_label">用户名</span></label>
+          <input type="text" id="regUsername" data-i18n-placeholder="reg_username_placeholder" placeholder="请设置用户名" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-lock"></i> <span data-i18n="reg_password_label">密码</span></label>
+          <input type="password" id="regPassword" data-i18n-placeholder="reg_password_placeholder" placeholder="请设置密码" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-check-circle"></i> <span data-i18n="reg_confirm_label">确认密码</span></label>
+          <input type="password" id="regConfirm" data-i18n-placeholder="reg_confirm_placeholder" placeholder="请再次输入密码" required>
+        </div>
+        <div class="form-group form-group-inline">
+          <input type="text" id="regCode" data-i18n-placeholder="reg_code_placeholder" placeholder="验证码" maxlength="6" class="flex-1">
+          <button type="button" class="btn btn-code" onclick="sendCode()" data-i18n="reg_get_code">获取验证码</button>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" data-i18n="reg_btn">注册</button>
+        <div class="auth-links">
+          <a onclick="navigateTo('login')" data-i18n="reg_login_link">已有账号？立即登录</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: User Center ===== -->
+<div class="page" data-page="user">
+  <div class="user-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h3 class="page-title" data-i18n="my_account">个人中心</h3>
+    </div>
+    <div class="user-card">
+      <div class="user-avatar">
+        <i class="fas fa-user-circle"></i>
+      </div>
+      <div class="user-info">
+        <h3 id="userNameDisplay">未登录</h3>
+        <div class="user-phone" id="userPhoneDisplay">-</div>
+      </div>
+    </div>
+    <div class="user-balance-card">
+      <div class="balance-row">
+        <span data-i18n="user_balance_label">账户余额</span>
+        <span class="balance-amount" id="userBalanceAmount">0 MMK</span>
+      </div>
+      <div class="balance-actions">
+        <button onclick="navigateTo('deposit')" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> <span data-i18n="user_deposit_btn">充值</span></button>
+        <button onclick="navigateTo('withdraw')" class="btn btn-outline btn-sm"><i class="fas fa-minus"></i> <span data-i18n="user_withdraw_btn">提现</span></button>
+      </div>
+    </div>
+    <div class="user-menu">
+      <a onclick="navigateTo('deposit')"><i class="fas fa-wallet"></i> <span data-i18n="user_menu_deposit">充值</span> <i class="fas fa-chevron-right arrow"></i></a>
+      <a onclick="navigateTo('withdraw')"><i class="fas fa-money-bill-wave"></i> <span data-i18n="user_menu_withdraw">提现</span> <i class="fas fa-chevron-right arrow"></i></a>
+      <a onclick="navigateTo('transactions')"><i class="fas fa-exchange-alt"></i> <span data-i18n="user_menu_transactions">交易记录</span> <i class="fas fa-chevron-right arrow"></i></a>
+      <a onclick="navigateTo('settings')"><i class="fas fa-unlock-alt"></i> <span data-i18n="user_menu_changepwd">修改密码</span> <i class="fas fa-chevron-right arrow"></i></a>
+      <a onclick="navigateTo('settings')"><i class="fas fa-university"></i> <span data-i18n="user_menu_bank">银行卡管理</span> <i class="fas fa-chevron-right arrow"></i></a>
+      <a href="#"><i class="fas fa-crown"></i> <span data-i18n="user_menu_vip">VIP等级</span> <i class="fas fa-chevron-right arrow"></i></a>
+      <a href="#"><i class="fas fa-share-alt"></i> <span data-i18n="user_menu_commission">佣金系统</span> <i class="fas fa-chevron-right arrow"></i></a>
+      <a onclick="navigateTo('settings')"><i class="fas fa-cog"></i> <span data-i18n="user_menu_settings">设置</span> <i class="fas fa-chevron-right arrow"></i></a>
+      <a onclick="handleLogout()" class="text-danger"><i class="fas fa-sign-out-alt"></i> <span data-i18n="user_menu_logout">退出登录</span> <i class="fas fa-chevron-right arrow"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: Deposit ===== -->
+<div class="page" data-page="deposit">
+  <div class="page-content form-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h3 class="page-title" data-i18n="deposit_title">在线充值</h3>
+    </div>
+    <div class="deposit-form">
+      <div class="balance-card">
+        <div class="balance-label" data-i18n="deposit_balance_label">账户余额</div>
+        <div class="balance-amount" id="depBalance">0 MMK</div>
+      </div>
+      <form id="depositForm" onsubmit="return handleDeposit(event)">
+        <div class="form-group">
+          <label data-i18n="deposit_payment_label">选择支付方式</label>
+          <select id="depPaymentType" class="form-select" onchange="updateDepositAccount()">
+            <option value="" data-i18n="deposit_payment_placeholder">请选择支付方式</option>
+            <option value="KBZ">KBZ Pay</option>
+            <option value="Wave">Wave Pay</option>
+          </select>
+          <div id="depAccountInfo" class="account-info" style="display:none">
+            <div class="info-row"><span data-i18n="deposit_bank">收款银行:</span> <span id="depBankName">-</span></div>
+            <div class="info-row"><span data-i18n="deposit_account">收款账号:</span> <span id="depBankAccount">-</span></div>
+            <div class="info-row"><span data-i18n="deposit_holder">收款人:</span> <span id="depBankHolder">-</span></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label data-i18n="deposit_amount_label">充值金额</label>
+          <div class="quick-amounts">
+            <button type="button" class="quick-amt" onclick="setDepAmount(5000)">5,000</button>
+            <button type="button" class="quick-amt" onclick="setDepAmount(10000)">10,000</button>
+            <button type="button" class="quick-amt" onclick="setDepAmount(50000)">50,000</button>
+            <button type="button" class="quick-amt" onclick="setDepAmount(100000)">100,000</button>
+          </div>
+          <input type="number" id="depAmount" data-i18n-placeholder="deposit_amount_placeholder" placeholder="最少 2,000 MMK" min="2000" required>
+        </div>
+        <div class="form-group">
+          <label data-i18n="deposit_screenshot_label">转账截图</label>
+          <div class="file-upload" onclick="document.getElementById('depScreenshot').click()">
+            <i class="fas fa-camera"></i>
+            <span id="depFileName" data-i18n="deposit_upload_text">点击上传转账截图</span>
+          </div>
+          <input type="file" id="depScreenshot" accept="image/*" style="display:none" onchange="document.getElementById('depFileName').textContent=this.files[0]?.name||document.getElementById('depFileName').getAttribute('data-i18n')?getI18nText('deposit_upload_text'):'点击上传转账截图'">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" data-i18n="deposit_submit_btn">提交充值</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: Withdraw ===== -->
+<div class="page" data-page="withdraw">
+  <div class="form-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h3 class="page-title" data-i18n="withdraw_title">提现</h3>
+    </div>
+    <div class="form-card">
+      <div class="form-balance">
+        <span data-i18n="withdraw_balance_label">账户余额</span>
+        <span class="balance-amount" id="withBalance">0 MMK</span>
+      </div>
+      <div class="withdraw-info">
+        <div class="info-row"><span data-i18n="withdraw_turnover_label">当前流水</span> <span id="withCurrentTurnover">0 MMK</span></div>
+        <div class="info-row"><span data-i18n="withdraw_available_label">可提现金额</span> <span id="withAvailable" class="text-success">0 MMK</span></div>
+      </div>
+      <form onsubmit="event.preventDefault(); handleWithdraw()">
+        <div class="form-group">
+          <label data-i18n="withdraw_method_label">提现方式</label>
+          <select id="withPaymentType" class="form-select">
+            <option value="" data-i18n="withdraw_method_placeholder">请选择提现方式</option>
+            <option value="KBZ">KBZ Pay</option>
+            <option value="Wave">Wave Pay</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label data-i18n="withdraw_account_label">收款账号</label>
+          <input type="text" id="withAccountNumber" data-i18n-placeholder="withdraw_account_placeholder" placeholder="请输入收款账号" required>
+        </div>
+        <div class="form-group">
+          <label data-i18n="withdraw_amount_label">提现金额</label>
+          <div class="amount-quick">
+            <button type="button" class="quick-amt" onclick="setWithAmount(10000)">10,000</button>
+            <button type="button" class="quick-amt" onclick="setWithAmount(50000)">50,000</button>
+            <button type="button" class="quick-amt" onclick="setWithAmount(100000)">100,000</button>
+            <button type="button" class="quick-amt" onclick="setWithAmount(500000)">500,000</button>
+          </div>
+          <input type="number" id="withAmount" data-i18n-placeholder="withdraw_amount_placeholder" placeholder="最少 10,000 MMK" min="10000" required>
+        </div>
+        <p class="form-note" data-i18n="withdraw_note">* 提现需完成当前流水要求方可提款</p>
+        <button type="submit" class="btn btn-primary btn-block" data-i18n="withdraw_submit_btn">提交提现</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: Transactions ===== -->
+<div class="page" data-page="transactions">
+  <div class="list-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h3 class="page-title" data-i18n="transactions_title">交易记录</h3>
+    </div>
+    <div class="tab-bar">
+      <span class="tab active" onclick="switchTransTab(this,'all')" data-i18n="transactions_tab_all">全部</span>
+      <span class="tab" onclick="switchTransTab(this,'deposit')" data-i18n="transactions_tab_deposit">充值</span>
+      <span class="tab" onclick="switchTransTab(this,'withdraw')" data-i18n="transactions_tab_withdraw">提现</span>
+    </div>
+    <div class="trans-list" id="transList">
+      <div class="empty-state">
+        <i class="fas fa-receipt"></i>
+        <p data-i18n="transactions_empty">暂无交易记录</p>
+        <button onclick="navigateTo('deposit')" class="btn btn-primary btn-sm" data-i18n="transactions_empty_btn">立即充值</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: Promotions ===== -->
+<div class="page" data-page="promotions">
+  <div class="list-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h3 class="page-title" data-i18n="promotions_page_title">优惠活动</h3>
+    </div>
+    <div class="promo-grid" id="promoGrid"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE: Contact ===== -->
+<div class="page" data-page="contact">
+  <div class="contact-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h3 class="page-title" data-i18n="contact_title">联系客服</h3>
+    </div>
+    <div class="contact-card">
+      <div class="contact-header">
+        <i class="fas fa-headset"></i>
+        <h4 data-i18n="contact_header_title">在线客服</h4>
+        <p data-i18n="contact_header_desc">24/7 全天候为您服务</p>
+      </div>
+      <div class="contact-channels">
+        <a href="https://t.me/hellocoke" target="_blank" class="channel-btn telegram">
+          <i class="fab fa-telegram-plane"></i>
+          <span><span data-i18n="contact_tg">Telegram</span>: @hellocoke</span>
+          <i class="fas fa-chevron-right"></i>
+        </a>
+        <div class="channel-btn info">
+          <i class="fas fa-clock"></i>
+          <span data-i18n="contact_service_hours">服务时间: 24小时</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: Slots ===== -->
+<div class="page" data-page="slots">
+  <div class="list-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h3 class="page-title" data-i18n="slots_page_title">老虎机</h3>
+    </div>
+    <div class="provider-tabs" id="slotTabs">
+      <span class="provider-tab active" onclick="filterSlots(this,'all')" data-i18n="slots_all">全部</span>
+      <span class="provider-tab" onclick="filterSlots(this,'jdb')">JDB</span>
+      <span class="provider-tab" onclick="filterSlots(this,'jili')">Jili</span>
+      <span class="provider-tab" onclick="filterSlots(this,'pg')">PG</span>
+      <span class="provider-tab" onclick="filterSlots(this,'pp')">PP</span>
+    </div>
+    <div class="game-grid" id="slotListGrid"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE: Fishing ===== -->
+<div class="page" data-page="fishing">
+  <div class="list-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h3 class="page-title" data-i18n="fishing_page_title">捕鱼游戏</h3>
+    </div>
+    <div class="game-grid" id="fishListGrid"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE: Settings ===== -->
+<div class="page" data-page="settings">
+  <div class="form-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h3 class="page-title" data-i18n="settings_title">设置</h3>
+    </div>
+    <div class="form-card">
+      <h4 data-i18n="settings_change_pwd">修改密码</h4>
+      <form onsubmit="event.preventDefault(); changePassword()">
+        <div class="form-group">
+          <label data-i18n="settings_old_pwd_label">原密码</label>
+          <input type="password" id="oldPassword" data-i18n-placeholder="settings_old_pwd_placeholder" placeholder="请输入原密码" required>
+        </div>
+        <div class="form-group">
+          <label data-i18n="settings_new_pwd_label">新密码</label>
+          <input type="password" id="newPassword" data-i18n-placeholder="settings_new_pwd_placeholder" placeholder="请输入新密码" required>
+        </div>
+        <div class="form-group">
+          <label data-i18n="settings_confirm_pwd_label">确认新密码</label>
+          <input type="password" id="confirmPassword" data-i18n-placeholder="settings_confirm_pwd_placeholder" placeholder="请再次输入新密码" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" data-i18n="settings_change_btn">修改密码</button>
+      </form>
+    </div>
+    <div class="form-card">
+      <h4 data-i18n="settings_language">语言设置</h4>
+      <div class="lang-selector">
+        <button class="lang-btn active" onclick="setLanguage('cn')">🇨🇳 中文</button>
+        <button class="lang-btn" onclick="setLanguage('en')">🇬🇧 English</button>
+        <button class="lang-btn" onclick="setLanguage('mm')">🇲🇲 မြန်မာ</button>
+        <button class="lang-btn" onclick="setLanguage('th')">🇹🇭 ไทย</button>
+      </div>
+    </div>
+    <div class="form-card">
+      <div class="setting-row">
+        <span><i class="fas fa-volume-up"></i> <span data-i18n="settings_sound">音效</span></span>
+        <label class="toggle">
+          <input type="checkbox" id="soundToggle" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: Admin Login ===== -->
+<div class="page" data-page="admin-login">
+  <div class="auth-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h3>管理员登录</h3>
+    </div>
+    <div class="auth-box">
+      <div class="auth-logo">
+        <img src="coke888-logo.svg" alt="Coke 888" style="height:80px;width:auto">
+        <h2 data-i18n="admin_login_title">管理员登录</h2>
+        <p data-i18n="admin_login_subtitle">后台管理系统专用入口</p>
+      </div>
+      <form onsubmit="event.preventDefault(); adminLogin()">
+        <div class="form-group">
+          <label><i class="fas fa-user-shield"></i> <span data-i18n="admin_login_account">管理员账号</span></label>
+          <input type="text" id="adminLoginUsername" data-i18n-placeholder="admin_login_account_placeholder" placeholder="请输入管理员账号" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-lock"></i> <span data-i18n="settings_new_pwd_label">密码</span></label>
+          <input type="password" id="adminLoginPassword" data-i18n-placeholder="admin_login_password_placeholder" placeholder="请输入管理员密码" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" data-i18n="admin_login_submit">登录后台</button>
+        <div class="auth-links">
+          <a onclick="navigateTo('login')" data-i18n="admin_login_return">返回前台登录</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: Admin Dashboard ===== -->
+<div class="page" data-page="admin">
+  <div class="admin-page">
+    <!-- Admin Header -->
+    <div class="admin-header">
+      <h3><i class="fas fa-shield-alt"></i> <span data-i18n="admin_dashboard_title">后台管理系统</span></h3>
+      <button class="btn btn-sm btn-outline" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> <span data-i18n="admin_logout">退出</span></button>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="admin-stats">
+      <div class="stat-card stat-card-users">
+        <div class="stat-icon"><i class="fas fa-users"></i></div>
+        <div class="stat-info">
+          <span class="stat-label" data-i18n="admin_stats_total_users">总用户</span>
+          <span class="stat-value" id="statTotalUsers">0</span>
+        </div>
+      </div>
+      <div class="stat-card stat-card-recharge">
+        <div class="stat-icon"><i class="fas fa-arrow-down"></i></div>
+        <div class="stat-info">
+          <span class="stat-label" data-i18n="admin_stats_total_recharge">总充值 (MMK)</span>
+          <span class="stat-value" id="statTotalRecharge">0</span>
+        </div>
+      </div>
+      <div class="stat-card stat-card-withdraw">
+        <div class="stat-icon"><i class="fas fa-arrow-up"></i></div>
+        <div class="stat-info">
+          <span class="stat-label" data-i18n="admin_stats_total_withdraw">总提现 (MMK)</span>
+          <span class="stat-value" id="statTotalWithdraw">0</span>
+        </div>
+      </div>
+      <div class="stat-card stat-card-online">
+        <div class="stat-icon"><i class="fas fa-circle"></i></div>
+        <div class="stat-info">
+          <span class="stat-label" data-i18n="admin_stats_online">在线人数</span>
+          <span class="stat-value" id="statOnlineUsers">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="dashboard" onclick="switchAdminTab('dashboard')"><i class="fas fa-tachometer-alt"></i> <span data-i18n="admin_tab_dashboard">仪表盘</span></button>
+      <button class="admin-tab" data-tab="users" onclick="switchAdminTab('users')"><i class="fas fa-user-cog"></i> <span data-i18n="admin_tab_users">用户管理</span></button>
+      <button class="admin-tab" data-tab="recharges" onclick="switchAdminTab('recharges')"><i class="fas fa-credit-card"></i> <span data-i18n="admin_tab_recharges">充值管理</span></button>
+      <button class="admin-tab" data-tab="withdraws" onclick="switchAdminTab('withdraws')"><i class="fas fa-money-bill-wave"></i> <span data-i18n="admin_tab_withdraws">提现管理</span></button>
+      <button class="admin-tab" data-tab="promotions" onclick="switchAdminTab('promotions')"><i class="fas fa-gift"></i> <span data-i18n="admin_tab_promotions">优惠管理</span></button>
+    </div>
+
+    <!-- Tab Content: Dashboard -->
+    <div class="admin-tab-content active" id="adminTabDashboard">
+      <div class="admin-card">
+        <h4><i class="fas fa-chart-line"></i> <span data-i18n="admin_overview">平台概览</span></h4>
+        <div class="dashboard-metrics">
+          <div class="metric-item">
+            <span class="metric-label" data-i18n="admin_today_reg">今日注册</span>
+            <span class="metric-value" id="dashboardTodayReg">0</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label" data-i18n="admin_today_recharge">今日充值</span>
+            <span class="metric-value" id="dashboardTodayRecharge">0 MMK</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label" data-i18n="admin_today_withdraw">今日提现</span>
+            <span class="metric-value" id="dashboardTodayWithdraw">0 MMK</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label" data-i18n="admin_active_7d">活跃用户 (7天)</span>
+            <span class="metric-value" id="dashboardActive7d">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Content: User Management -->
+    <div class="admin-tab-content" id="adminTabUsers">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h4><i class="fas fa-users"></i> <span data-i18n="admin_user_list">用户列表</span></h4>
+          <div class="admin-search-bar">
+            <input type="text" id="adminUserSearch" data-i18n-placeholder="admin_user_search" placeholder="搜索用户名/手机号..." oninput="adminSearchUsers()">
+            <button class="btn btn-sm btn-primary" onclick="adminSearchUsers()"><i class="fas fa-search"></i></button>
+          </div>
+        </div>
+        <div class="admin-table-wrapper">
+          <table class="admin-table" id="usersTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th data-i18n="login_username_label">用户名</th>
+                <th data-i18n="reg_phone_label">手机号</th>
+                <th data-i18n="user_balance_label">余额</th>
+                <th data-i18n="forgot_pwd_btn">状态</th>
+                <th>注册时间</th>
+                <th data-i18n="user_menu_settings">操作</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <tr><td colspan="7" class="text-center">加载中...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Content: Recharge Management -->
+    <div class="admin-tab-content" id="adminTabRecharges">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h4><i class="fas fa-credit-card"></i> <span data-i18n="admin_recharge_records">充值记录</span></h4>
+          <div class="admin-filter-group">
+            <select id="rechargeStatusFilter" onchange="adminFilterRecharges()">
+              <option value="">全部状态</option>
+              <option value="待处理">待处理</option>
+              <option value="已完成">已完成</option>
+              <option value="已失败">已失败</option>
+            </select>
+          </div>
+        </div>
+        <div class="admin-table-wrapper">
+          <table class="admin-table" id="rechargesTable">
+            <thead>
+              <tr>
+                <th data-i18n="admin_recharge_records">订单号</th>
+                <th data-i18n="login_username_label">用户名</th>
+                <th data-i18n="admin_stats_total_recharge">金额 (MMK)</th>
+                <th data-i18n="deposit_payment_label">方式</th>
+                <th data-i18n="forgot_pwd_btn">状态</th>
+                <th>时间</th>
+                <th data-i18n="user_menu_settings">操作</th>
+              </tr>
+            </thead>
+            <tbody id="rechargesTableBody">
+              <tr><td colspan="7" class="text-center">加载中...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Content: Withdraw Management -->
+    <div class="admin-tab-content" id="adminTabWithdraws">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h4><i class="fas fa-money-bill-wave"></i> <span data-i18n="admin_withdraw_records">提现记录</span></h4>
+          <div class="admin-filter-group">
+            <select id="withdrawStatusFilter" onchange="adminFilterWithdraws()">
+              <option value="">全部状态</option>
+              <option value="待处理">待处理</option>
+              <option value="已完成">已完成</option>
+              <option value="已失败">已失败</option>
+            </select>
+          </div>
+        </div>
+        <div class="admin-table-wrapper">
+          <table class="admin-table" id="withdrawsTable">
+            <thead>
+              <tr>
+                <th data-i18n="admin_recharge_records">订单号</th>
+                <th data-i18n="login_username_label">用户名</th>
+                <th data-i18n="admin_stats_total_recharge">金额 (MMK)</th>
+                <th data-i18n="withdraw_method_label">方式</th>
+                <th data-i18n="withdraw_account_label">账户</th>
+                <th data-i18n="forgot_pwd_btn">状态</th>
+                <th>时间</th>
+                <th data-i18n="user_menu_settings">操作</th>
+              </tr>
+            </thead>
+            <tbody id="withdrawsTableBody">
+              <tr><td colspan="8" class="text-center" data-i18n="admin_loading">加载中...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Content: Promotions -->
+    <div class="admin-tab-content" id="adminTabPromotions">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h4><i class="fas fa-gift"></i> <span data-i18n="admin_promo_mgmt">优惠活动管理</span></h4>
+          <button class="btn btn-sm btn-primary" onclick="adminAddPromotion()"><i class="fas fa-plus"></i> <span data-i18n="admin_add_promo">添加活动</span></button>
+        </div>
+        <div class="admin-table-wrapper">
+          <table class="admin-table" id="promotionsTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th data-i18n="promotions_page_title">标题</th>
+                <th>类型</th>
+                <th data-i18n="forgot_pwd_btn">状态</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th data-i18n="user_menu_settings">操作</th>
+              </tr>
+            </thead>
+            <tbody id="promotionsTableBody">
+              <tr><td colspan="7" class="text-center">加载中...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Login Modal (for backwards compat) ===== -->
+<div class="modal-overlay" id="loginModal" style="display:none">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>登录</h3>
+      <button class="modal-close" onclick="closeLogin()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="text" id="username" placeholder="用户名" class="modal-input">
+      <input type="password" id="password" placeholder="密码" class="modal-input">
+      <button class="modal-btn" onclick="handleLogin()">登录</button>
+      <button class="modal-btn modal-btn-secondary" onclick="handleRegister()">注册</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Service Modal ===== -->
+<div class="modal-overlay" id="serviceModal" style="display:none">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>在线客服</h3>
+      <button class="modal-close" onclick="closeService()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <a href="https://t.me/hellocoke" target="_blank" class="service-btn">
+        <i class="fab fa-telegram"></i> Telegram
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Bottom Navigation ===== -->
+<nav class="bottom-nav">
+  <a class="nav-item active" data-page="home" onclick="navigateTo('home')">
+    <i class="fas fa-home"></i>
+    <span data-i18n="home">首页</span>
+  </a>
+  <a class="nav-item" data-page="promotions" onclick="navigateTo('promotions')">
+    <i class="fas fa-gift"></i>
+    <span data-i18n="promotions">优惠</span>
+  </a>
+  <a class="nav-item" data-page="deposit" onclick="navigateTo('deposit')">
+    <i class="fas fa-wallet"></i>
+    <span data-i18n="deposit">充值</span>
+  </a>
+  <a class="nav-item" data-page="contact" onclick="navigateTo('contact')">
+    <i class="fas fa-headset"></i>
+    <span data-i18n="contact">客服</span>
+  </a>
+  <a class="nav-item" data-page="user" onclick="navigateTo('user')">
+    <i class="fas fa-user"></i>
+    <span data-i18n="my_account">我的</span>
+  </a>
+</nav>
+
+<!-- ===== Floating Social Buttons ===== -->
+<div class="social-float">
+  <a href="https://t.me/hellocoke" target="_blank" class="social-btn telegram-float">
+    <i class="fab fa-telegram-plane"></i>
+  </a>
+</div>
+
+<!-- ===== Top Scroll Button ===== -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- ===== Forgot Password Modal ===== -->
+<div class="modal-overlay" id="forgotPwdModal" style="display:none">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 data-i18n="forgot_password_title">忘记密码</h3>
+      <button class="modal-close" onclick="closeForgotPwdModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p style="color:var(--text-secondary);font-size:13px;margin-bottom:4px" data-i18n="forgot_password_desc">请输入您的用户名，密码将重置为 888888</p>
+      <input type="text" id="forgotPwdUsername" data-i18n-placeholder="forgot_pwd_username_placeholder" placeholder="请输入用户名" class="modal-input">
+      <button class="modal-btn" onclick="handleForgotPassword()" data-i18n="forgot_password_btn">重置密码</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Footer ===== -->
+<footer class="app-footer">
+  <div class="footer-links">
+    <a href="#" onclick="showToast('关于我们 - Coke 888 最佳线上娱乐平台')" data-i18n="footer_about">关于我们</a>
+    <a href="#" onclick="showToast('服务条款 - 请遵守当地法律法规')" data-i18n="footer_terms">服务条款</a>
+    <a href="#" onclick="showToast('隐私政策 - 我们保护您的个人信息')" data-i18n="footer_privacy">隐私政策</a>
+  </div>
+  <div class="footer-copyright">
+    <span data-i18n="footer_copyright">© 2026 Coke 888. 版权所有 All Rights Reserved.</span>
+  </div>
+</footer>
+
+<script src="script.js?v=2"></script>
+</body>
+</html>
