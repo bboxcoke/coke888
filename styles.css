@@ -105,7 +105,9 @@ i { font-style: normal; }
 .header-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-shrink: 0;
+  overflow: visible;
 }
 
 .login-btn {
@@ -121,6 +123,7 @@ i { font-style: normal; }
   gap: 6px;
   font-weight: 500;
   transition: all 0.2s;
+  flex-shrink: 0;
 }
 
 .login-btn:active {
@@ -130,6 +133,7 @@ i { font-style: normal; }
 /* ===== Header Language Switcher ===== */
 .header-lang-switcher {
   position: relative;
+  flex-shrink: 0;
 }
 .header-lang-switcher .lang-btn {
   background: none;
@@ -1148,11 +1152,15 @@ i { font-style: normal; }
   display: flex;
   align-items: center;
   background: rgba(255,255,255,0.08);
-  padding: 4px 10px;
+  padding: 4px 6px;
   border-radius: 16px;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--gold);
   white-space: nowrap;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
 }
 .user-balance .currency {
   font-size: 10px;
