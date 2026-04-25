@@ -1155,14 +1155,6 @@ function getFallbackImg(index) {
 
 // ===== BOLE Games Data =====
 const BOLE_GAMES = {
-  hot: [
-    { id: 'slotfzsn', name: '非洲水牛', category: 'slots', provider: 'BOLE' },
-    { id: 'twone', name: 'Shan Koe Mee', category: 'poker', provider: 'BOLE' },
-    { id: 'blackjack', name: '21點', category: 'poker', provider: 'BOLE' },
-    { id: 'lhwar', name: '龍虎鬥', category: 'poker', provider: 'BOLE' },
-    { id: 'fsc', name: '泰國魚蟹蝦', category: 'novelty', provider: 'BOLE' },
-    { id: 'baccarat', name: '百家樂', category: 'poker', provider: 'BOLE' },
-  ],
   boleSlots: [
     { id: 'slotfzsn', name: '非洲水牛', category: 'slots', provider: 'BOLE' },
   ],
@@ -1206,9 +1198,18 @@ function createGameCard(game, index) {
 const SUPER_777 = { name: '超级777', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20olympgate.webp' };
 const DEEP_FISH = { name: '深海猎渔', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20olympx.webp' };
 
-// Hot games = BOLE hot + 超级777 + 深海猎渔
+// Hot games - 按用户指定顺序: 非洲水牛, SKM, 21点, 龙虎斗, 超级777, 深海猎渔, 泰国鱼蟹虾, 百家乐
 function getHotGames() {
-  return [...BOLE_GAMES.hot, SUPER_777, DEEP_FISH];
+  return [
+    { id: 'slotfzsn', name: '非洲水牛', category: 'slots', provider: 'BOLE' },
+    { id: 'twone', name: 'Shan Koe Mee', category: 'poker', provider: 'BOLE' },
+    { id: 'blackjack', name: '21點', category: 'poker', provider: 'BOLE' },
+    { id: 'lhwar', name: '龍虎鬥', category: 'poker', provider: 'BOLE' },
+    SUPER_777,
+    DEEP_FISH,
+    { id: 'fsc', name: '泰國魚蟹蝦', category: 'novelty', provider: 'BOLE' },
+    { id: 'baccarat', name: '百家樂', category: 'poker', provider: 'BOLE' },
+  ];
 }
 
 // ===== Render All Game Lists =====
@@ -1246,6 +1247,15 @@ function renderFishList() {
   grid.innerHTML = GAME_IMAGES.fish.map((g, i) => createGameCard(g, i)).join('');
 }
 
+function renderNoveltyList() {
+  const grid = document.getElementById('noveltyGamesList');
+  if (!grid) return;
+  // BOLE novelty + PP arcade
+  const boleNovelty = BOLE_GAMES.boleNovelty.map((g, i) => createGameCard(g, i));
+  const ppArcade = GAME_IMAGES.arcade.map((g, i) => createGameCard(g, i + boleNovelty.length));
+  grid.innerHTML = [...boleNovelty, ...ppArcade].join('');
+}
+
 // ===== SPA Router =====
 function navigateTo(page) {
   // Hide all pages
@@ -1273,7 +1283,7 @@ function navigateTo(page) {
   if (page === 'poker') renderBoleList('pokerGamesList', BOLE_GAMES.bolePoker);
   if (page === 'slots') renderSlotList();
   if (page === 'fishing') renderFishList();
-  if (page === 'novelty') renderBoleList('noveltyGamesList', BOLE_GAMES.boleNovelty);
+  if (page === 'novelty') renderNoveltyList();
   if (page === 'promotions') renderPromotions();
   if (page === 'user') { updateUserPage(); fetchUserProfile(); }
   if (page === 'deposit' || page === 'withdraw') { updateBalanceDisplays(); fetchUserProfile(); }
