@@ -481,6 +481,57 @@ i { font-style: normal; }
   text-overflow: ellipsis;
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.game-provider {
+  font-size: 9px;
+  color: #D4A843;
+  background: rgba(212, 168, 67, 0.15);
+  padding: 0 4px;
+  border-radius: 3px;
+  line-height: 14px;
+}
+
+.game-actions {
+  display: flex;
+  gap: 4px;
+  padding: 0 6px 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.game-btn {
+  flex: 1;
+  padding: 4px 0;
+  border: none;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.demo-btn {
+  background: rgba(212, 168, 67, 0.2);
+  color: #D4A843;
+  border: 1px solid rgba(212, 168, 67, 0.4);
+}
+.demo-btn:active {
+  background: rgba(212, 168, 67, 0.4);
+  transform: scale(0.95);
+}
+
+.play-btn {
+  background: linear-gradient(135deg, #D4A843, #B8860B);
+  color: #000;
+  border: 1px solid #FFD700;
+}
+.play-btn:active {
+  transform: scale(0.95);
 }
 
 /* ===== Bottom Nav ===== */

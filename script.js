@@ -1070,6 +1070,46 @@ document.addEventListener('click', function(e) {
 });
 
 // ===== Game Data =====
+// 厂商试玩平台入口（方案2 - 跳转外链）
+const DEMO_PLATFORMS = {
+  'PP':    'https://demogamesfree.pragmaticplay.net/',
+  'PG':    'https://www.slotsup.com/free-slots-online/',
+  'JDB':   'https://www.jdbdemo.com/',
+  'Jili':  'https://jili.bet/',
+  'Joker': 'https://www.joker123.net/',
+};
+// PG Soft 游戏在 slotsup 上的 slug 映射
+const PG_SLUGS = {
+  '龙之宝藏': 'lucky-neko',  // 近似匹配
+  '魔法森林': 'wild-bandito',
+  '招财进宝': 'fortune-ox',
+  '拳皇争霸': 'majiayong',
+  '海洋之星': 'gem-saviour',
+  '黄金鱼':   'candy-burst',
+};
+// Pragmatic Play 游戏的 symbol 映射
+const PP_SYMBOLS = {
+  '超级777': 'vs20olympgate',
+  '财富轮盘': 'vs20sugarrush',
+  '福禄寿':   'vs20starlight',
+  '赛车风云': 'vs20doghouse',
+  '弹球大师': 'vs10ladywolf',
+  '深海猎手': 'vs20fruitsw',
+};
+// 获取游戏试玩链接
+function getGameDemoUrl(game) {
+  const { provider, name } = game;
+  if (provider === 'PP') {
+    const sym = PP_SYMBOLS[name] || 'vs20olympgate';
+    return `https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=${sym}&websiteUrl=https://demogamesfree.pragmaticplay.net&jurisdiction=99&lobbyUrl=https://www.pragmaticplay.com`;
+  }
+  if (provider === 'PG') {
+    const slug = PG_SLUGS[name] || 'lucky-neko';
+    return `https://www.slotsup.com/free-slots-online/${slug}-pg-soft`;
+  }
+  return DEMO_PLATFORMS[provider] || 'https://www.jdbdemo.com/';
+}
+
 const GAME_IMAGES = {
   slots: [
     { name: '财富之王', provider: 'JDB', img: 'images/games/slot_1.svg' },
@@ -1129,7 +1169,13 @@ function getFallbackImg(index) {
 }
 
 function createGameCard(game, index) {
-  return `<div class="game-card" onclick="showLogin()"><img src="${game.img}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"><div class="game-name">${game.name}</div></div>`;
+  const demoUrl = getGameDemoUrl(game);
+  return `<div class="game-card"><img src="${game.img}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"><div class="game-name">${game.name}<span class="game-provider">${game.provider}</span></div><div class="game-actions"><button class="game-btn demo-btn" onclick="openGameDemo('${demoUrl}');event.stopPropagation()">🎮 试玩</button><button class="game-btn play-btn" onclick="showLogin()">🎰 进入</button></div></div>`;
+}
+
+// 打开游戏试玩（方案2 - 跳转外链）
+function openGameDemo(url) {
+  window.open(url, '_blank');
 }
 
 // ===== SPA Router =====
@@ -1558,7 +1604,7 @@ function renderPromotions() {
 
 // ===== Game Lists =====
 function renderSlotList(filter) {
-  const grid = document.getElementById('slotListGrid');
+  const grid = document.getElementById('slotListGrid') || document.getElementById('slotListContainer');
   const games = filter === 'all' ? GAME_IMAGES.slots : GAME_IMAGES.slots.filter(g => g.provider.toUpperCase() === filter.toUpperCase());
   if (games.length === 0) {
     grid.innerHTML = `<div class="empty-state"><i class="fas fa-dice"></i><p>该供应商暂无游戏</p></div>`;
