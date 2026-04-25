@@ -1280,6 +1280,15 @@ i { font-style: normal; }
   font-size: 13px; color: #D4A843; white-space: nowrap;
   animation: marqueeScroll 25s linear infinite;
 }
+/* Shade layer under icon to prevent text overlap */
+.marquee-bar {
+  position: relative;
+}
+.marquee-shade {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 48px;
+  background: linear-gradient(90deg, #0a0a0f 60%, transparent);
+  pointer-events: none;
+}
 @keyframes marqueeScroll {
   0% { transform: translateX(100%); }
   100% { transform: translateX(-100%); }

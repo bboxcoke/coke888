@@ -331,6 +331,7 @@ const LANG = {
     'balance_updated': '余额已更新',
     'user_status': '用户状态',
     'filter': '筛选',
+    'marquee_text': '🎉 欢迎来到Coke888 新人送首充送200%福利',
   },
   en: {
     'loading': 'Loading...',
@@ -527,6 +528,7 @@ const LANG = {
     'balance_updated': 'Balance updated',
     'user_status': 'Status',
     'filter': 'Filter',
+    'marquee_text': '🎉 Welcome to Coke888 New users get 200% bonus on first deposit',
   },
   mm: {
     'loading': 'ဝန်ဆောင်နေသည်...',
@@ -758,6 +760,7 @@ const LANG = {
     'game_title_slots': 'စလော့ဂိမ်း',
     'game_title_fishing': 'ငါးဖမ်းဂိမ်း',
     'game_title_arcade': 'အာကိတ်ဂိမ်း',
+    'marquee_text': '🎉 Coke888 မှကြိုဆိုပါတယ် ပထမဆုံးငွေသွင်းလျှင် ၂၀၀% ဘောနပ်စ်',
   },
   th: {
     'loading': 'กำลังโหลด...',
@@ -1019,6 +1022,7 @@ const LANG = {
     'balance_updated': 'อัปเดตยอดเงินแล้ว',
     'user_status': 'สถานะ',
     'filter': 'กรอง',
+    'marquee_text': '🎉 ยินดีต้อนรับสู่ Coke888 ฝากครั้งแรกรับโบนัส 200%',
   }
 };
 
