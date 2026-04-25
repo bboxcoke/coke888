@@ -496,46 +496,13 @@ i { font-style: normal; }
   line-height: 14px;
 }
 
-.game-actions {
-  display: flex;
-  gap: 4px;
-  padding: 0 6px 6px;
-  position: relative;
-  z-index: 1;
-}
-
-.game-btn {
-  flex: 1;
-  padding: 4px 0;
-  border: none;
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.demo-btn {
-  background: rgba(212, 168, 67, 0.2);
-  color: #D4A843;
-  border: 1px solid rgba(212, 168, 67, 0.4);
+.game-card-link {
+  display: block;
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  color: inherit;
 }
-.demo-btn:active {
-  background: rgba(212, 168, 67, 0.4);
-  transform: scale(0.95);
-}
-
-.play-btn {
-  background: linear-gradient(135deg, #D4A843, #B8860B);
-  color: #000;
-  border: 1px solid #FFD700;
-}
-.play-btn:active {
-  transform: scale(0.95);
+.game-card-link:active .game-card {
+  transform: scale(0.97);
 }
 
 /* ===== Bottom Nav ===== */

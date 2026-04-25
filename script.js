@@ -1071,22 +1071,6 @@ document.addEventListener('click', function(e) {
 
 // ===== Game Data =====
 // 厂商试玩平台入口（方案2 - 跳转外链）
-const DEMO_PLATFORMS = {
-  'PP':    'https://demogamesfree.pragmaticplay.net/',
-  'PG':    'https://www.slotsup.com/free-slots-online/',
-  'JDB':   'https://www.jdbdemo.com/',
-  'Jili':  'https://jili.bet/',
-  'Joker': 'https://www.joker123.net/',
-};
-// PG Soft 游戏在 slotsup 上的 slug 映射
-const PG_SLUGS = {
-  '龙之宝藏': 'lucky-neko',  // 近似匹配
-  '魔法森林': 'wild-bandito',
-  '招财进宝': 'fortune-ox',
-  '拳皇争霸': 'majiayong',
-  '海洋之星': 'gem-saviour',
-  '黄金鱼':   'candy-burst',
-};
 // Pragmatic Play 游戏的 symbol 映射
 const PP_SYMBOLS = {
   '超级777': 'vs20olympgate',
@@ -1095,58 +1079,39 @@ const PP_SYMBOLS = {
   '赛车风云': 'vs20doghouse',
   '弹球大师': 'vs10ladywolf',
   '深海猎手': 'vs20fruitsw',
+  '冰封奇缘': 'vs20ladywolf',
+  '黄金骑士': 'vs20starlight',
+  '暗影刺客': 'vs20doghouse',
+  '星际迷航': 'vs20olympgate',
+  '花果山':   'vs20fruitsw',
+  '黄金国':   'vs20sugarrush',
+  '甜蜜派对': 'vs20fruitparty',
 };
-// 获取游戏试玩链接
-function getGameDemoUrl(game) {
-  const { provider, name } = game;
-  if (provider === 'PP') {
-    const sym = PP_SYMBOLS[name] || 'vs20olympgate';
-    return `https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=${sym}&websiteUrl=https://demogamesfree.pragmaticplay.net&jurisdiction=99&lobbyUrl=https://www.pragmaticplay.com`;
-  }
-  if (provider === 'PG') {
-    const slug = PG_SLUGS[name] || 'lucky-neko';
-    return `https://www.slotsup.com/free-slots-online/${slug}-pg-soft`;
-  }
-  return DEMO_PLATFORMS[provider] || 'https://www.jdbdemo.com/';
-}
 
 const GAME_IMAGES = {
   slots: [
-    { name: '财富之王', provider: 'JDB', img: 'images/games/slot_1.svg' },
-    { name: '埃及宝藏', provider: 'Jili', img: 'images/games/slot_2.svg' },
-    { name: '龙之宝藏', provider: 'PG', img: 'images/games/slot_3.svg' },
     { name: '超级777', provider: 'PP', img: 'images/games/slot_4.svg' },
-    { name: '黄金之路', provider: 'JDB', img: 'images/games/slot_5.svg' },
-    { name: '水果乐园', provider: 'Jili', img: 'images/games/slot_6.svg' },
-    { name: '海盗宝藏', provider: 'Joker', img: 'images/games/slot_7.svg' },
-    { name: '魔法森林', provider: 'PG', img: 'images/games/slot_8.svg' },
     { name: '财富轮盘', provider: 'PP', img: 'images/games/slot_9.svg' },
-    { name: '闪电老虎', provider: 'JDB', img: 'images/games/slot_10.svg' },
-    { name: '亚洲之虎', provider: 'Jili', img: 'images/games/slot_11.svg' },
-    { name: '钻石之星', provider: 'Joker', img: 'images/games/slot_12.svg' },
-    { name: '招财进宝', provider: 'PG', img: 'images/games/slot_13.svg' },
-    { name: '福禄寿', provider: 'PP', img: 'images/games/slot_14.svg' },
-    { name: '金猴送福', provider: 'JDB', img: 'images/games/slot_15.svg' },
-    { name: '富贵花开', provider: 'Jili', img: 'images/games/slot_16.svg' },
+    { name: '福禄寿',   provider: 'PP', img: 'images/games/slot_14.svg' },
+    { name: '赛车风云', provider: 'PP', img: 'images/games/slot_10.svg' },
+    { name: '弹球大师', provider: 'PP', img: 'images/games/slot_1.svg' },
+    { name: '深海猎手', provider: 'PP', img: 'images/games/slot_5.svg' },
+    { name: '冰封奇缘', provider: 'PP', img: 'images/games/slot_2.svg' },
+    { name: '黄金骑士', provider: 'PP', img: 'images/games/slot_12.svg' },
+    { name: '暗影刺客', provider: 'PP', img: 'images/games/slot_13.svg' },
+    { name: '星际迷航', provider: 'PP', img: 'images/games/slot_15.svg' },
+    { name: '花果山',   provider: 'PP', img: 'images/games/slot_16.svg' },
+    { name: '黄金国',   provider: 'PP', img: 'images/games/slot_17.svg' },
+    { name: '甜蜜派对', provider: 'PP', img: 'images/games/slot_18.svg' },
   ],
   fish: [
-    { name: '捕鱼达人', provider: 'JDB', img: 'images/games/fish_1.svg' },
-    { name: '海底世界', provider: 'Jili', img: 'images/games/fish_2.svg' },
-    { name: '黄金鱼', provider: 'PG', img: 'images/games/fish_3.svg' },
-    { name: '深海猎手', provider: 'PP', img: 'images/games/fish_4.svg' },
-    { name: '鱼王争霸', provider: 'JDB', img: 'images/games/fish_5.svg' },
-    { name: '珊瑚宝藏', provider: 'Jili', img: 'images/games/fish_6.svg' },
-    { name: '鲨鱼攻击', provider: 'Joker', img: 'images/games/fish_7.svg' },
-    { name: '海洋之星', provider: 'PG', img: 'images/games/fish_8.svg' },
+    { name: '深海猎渔', provider: 'PP', img: 'images/games/fish_1.svg' },
+    { name: '捕鱼达人', provider: 'PP', img: 'images/games/fish_2.svg' },
   ],
   arcade: [
-    { name: '赛车风云', provider: 'PP', img: 'images/games/arcade_1.svg' },
-    { name: '射击高手', provider: 'JDB', img: 'images/games/arcade_2.svg' },
-    { name: '水果忍者', provider: 'Jili', img: 'images/games/arcade_3.svg' },
-    { name: '拳皇争霸', provider: 'PG', img: 'images/games/arcade_4.svg' },
-    { name: '飞机大战', provider: 'Joker', img: 'images/games/arcade_5.svg' },
-    { name: '弹球大师', provider: 'PP', img: 'images/games/arcade_6.svg' },
-  ]
+    { name: '弹球',  provider: 'PP', img: 'images/games/arcade_1.svg' },
+    { name: '打地鼠', provider: 'PP', img: 'images/games/arcade_2.svg' },
+  ],
 };
 
 // ===== Fallback Image =====
@@ -1169,11 +1134,10 @@ function getFallbackImg(index) {
 }
 
 function createGameCard(game, index) {
-  const demoUrl = getGameDemoUrl(game);
-  return `<div class="game-card"><img src="${game.img}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"><div class="game-name">${game.name}<span class="game-provider">${game.provider}</span></div><div class="game-actions"><a href="${demoUrl}" target="_blank" rel="noopener noreferrer" class="game-btn demo-btn" onclick="event.stopPropagation()">🎮 试玩</a><button class="game-btn play-btn" onclick="showLogin()">🎰 进入</button></div></div>`;
+  const sym = PP_SYMBOLS[game.name] || 'vs20olympgate';
+  const demoUrl = `https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=${sym}&websiteUrl=https://demogamesfree.pragmaticplay.net&jurisdiction=99`;
+  return `<a href="${demoUrl}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><img src="${game.img}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"><div class="game-name">${game.name}<span class="game-provider">PP</span></div></div></a>`;
 }
-
-// 打开游戏试玩 - 改用<a>标签直接跳转，避免浏览器弹窗拦截
 
 // ===== SPA Router =====
 function navigateTo(page) {
@@ -1198,7 +1162,7 @@ function navigateTo(page) {
   }
   
   // Render dynamic content on page entry
-  if (page === 'slots') renderSlotList('all');
+  if (page === 'slots') renderSlotList();
   if (page === 'fishing') renderFishList();
   if (page === 'promotions') renderPromotions();
   if (page === 'user') { updateUserPage(); fetchUserProfile(); }
@@ -1600,20 +1564,14 @@ function renderPromotions() {
 }
 
 // ===== Game Lists =====
-function renderSlotList(filter) {
+function renderSlotList() {
   const grid = document.getElementById('slotListGrid') || document.getElementById('slotListContainer');
-  const games = filter === 'all' ? GAME_IMAGES.slots : GAME_IMAGES.slots.filter(g => g.provider.toUpperCase() === filter.toUpperCase());
+  const games = GAME_IMAGES.slots;
   if (games.length === 0) {
-    grid.innerHTML = `<div class="empty-state"><i class="fas fa-dice"></i><p>该供应商暂无游戏</p></div>`;
+    grid.innerHTML = `<div class="empty-state"><i class="fas fa-dice"></i><p>暂无游戏</p></div>`;
     return;
   }
   grid.innerHTML = games.map((g, i) => createGameCard(g, i)).join('');
-}
-
-function filterSlots(el, provider) {
-  document.querySelectorAll('.provider-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  renderSlotList(provider);
 }
 
 function renderFishList() {
@@ -1751,11 +1709,11 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('DOMContentLoaded', () => {
   // Render home games
   const slotGrid = document.getElementById('slotGames');
-  if (slotGrid) slotGrid.innerHTML = GAME_IMAGES.slots.slice(0, 8).map((g, i) => createGameCard(g, i)).join('');
+  if (slotGrid) slotGrid.innerHTML = GAME_IMAGES.slots.map((g, i) => createGameCard(g, i)).join('');
   const fishGrid = document.getElementById('fishGames');
-  if (fishGrid) fishGrid.innerHTML = GAME_IMAGES.fish.slice(0, 8).map((g, i) => createGameCard(g, i + 12)).join('');
+  if (fishGrid) fishGrid.innerHTML = GAME_IMAGES.fish.map((g, i) => createGameCard(g, i + 13)).join('');
   const arcadeGrid = document.getElementById('arcadeGames');
-  if (arcadeGrid) arcadeGrid.innerHTML = GAME_IMAGES.arcade.slice(0, 8).map((g, i) => createGameCard(g, i + 20)).join('');
+  if (arcadeGrid) arcadeGrid.innerHTML = GAME_IMAGES.arcade.map((g, i) => createGameCard(g, i + 15)).join('');
   
   // Carousel
   startAutoSlide();
