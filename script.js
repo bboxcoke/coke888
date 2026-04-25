@@ -1078,39 +1078,43 @@ const PP_SYMBOLS = {
   '福禄寿':   'vs20starlight',
   '赛车风云': 'vs20doghouse',
   '弹球大师': 'vs10ladywolf',
-  '深海猎手': 'vs20fruitsw',
-  '冰封奇缘': 'vs20ladywolf',
-  '黄金骑士': 'vs20starlight',
-  '暗影刺客': 'vs20doghouse',
-  '星际迷航': 'vs20olympgate',
-  '花果山':   'vs20fruitsw',
-  '黄金国':   'vs20sugarrush',
+  '深海猎手': 'vs20fruitswx',
+  '冰封奇缘': 'vs20chicken',
+  '黄金骑士': 'vs10goldentitan',
+  '暗影刺客': 'vs20ninja',
+  '星际迷航': 'vs10alien',
+  '花果山':   'vs20monkey',
+  '黄金国':   'vs20eldorado',
   '甜蜜派对': 'vs20fruitparty',
+  '深海猎渔': 'vs20olympx',
+  '捕鱼达人': 'vs20fruitsw',
+  '弹球':     'vswayslions',
+  '打地鼠':   'vswaysrabbits',
 };
 
 const GAME_IMAGES = {
   slots: [
-    { name: '超级777', provider: 'PP', img: 'images/games/slot_4.svg' },
-    { name: '财富轮盘', provider: 'PP', img: 'images/games/slot_9.svg' },
-    { name: '福禄寿',   provider: 'PP', img: 'images/games/slot_14.svg' },
-    { name: '赛车风云', provider: 'PP', img: 'images/games/slot_10.svg' },
-    { name: '弹球大师', provider: 'PP', img: 'images/games/slot_1.svg' },
-    { name: '深海猎手', provider: 'PP', img: 'images/games/slot_5.svg' },
-    { name: '冰封奇缘', provider: 'PP', img: 'images/games/slot_2.svg' },
-    { name: '黄金骑士', provider: 'PP', img: 'images/games/slot_12.svg' },
-    { name: '暗影刺客', provider: 'PP', img: 'images/games/slot_13.svg' },
-    { name: '星际迷航', provider: 'PP', img: 'images/games/slot_15.svg' },
-    { name: '花果山',   provider: 'PP', img: 'images/games/slot_16.svg' },
-    { name: '黄金国',   provider: 'PP', img: 'images/games/slot_17.svg' },
-    { name: '甜蜜派对', provider: 'PP', img: 'images/games/slot_18.svg' },
+    { name: '超级777', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20olympgate.webp' },
+    { name: '财富轮盘', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20sugarrush.webp' },
+    { name: '福禄寿',   provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20starlight.webp' },
+    { name: '赛车风云', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20doghouse.webp' },
+    { name: '弹球大师', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs10ladywolf.webp' },
+    { name: '深海猎手', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20fruitswx.webp' },
+    { name: '冰封奇缘', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20chicken.webp' },
+    { name: '黄金骑士', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs10goldentitan.webp' },
+    { name: '暗影刺客', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20ninja.webp' },
+    { name: '星际迷航', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs10alien.webp' },
+    { name: '花果山',   provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20monkey.webp' },
+    { name: '黄金国',   provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20eldorado.webp' },
+    { name: '甜蜜派对', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20fruitparty.webp' },
   ],
   fish: [
-    { name: '深海猎渔', provider: 'PP', img: 'images/games/fish_1.svg' },
-    { name: '捕鱼达人', provider: 'PP', img: 'images/games/fish_2.svg' },
+    { name: '深海猎渔', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20olympx.webp' },
+    { name: '捕鱼达人', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20fruitsw.webp' },
   ],
   arcade: [
-    { name: '弹球',  provider: 'PP', img: 'images/games/arcade_1.svg' },
-    { name: '打地鼠', provider: 'PP', img: 'images/games/arcade_2.svg' },
+    { name: '弹球',  provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vswayslions.webp' },
+    { name: '打地鼠', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vswaysrabbits.webp' },
   ],
 };
 
@@ -1164,6 +1168,7 @@ function navigateTo(page) {
   // Render dynamic content on page entry
   if (page === 'slots') renderSlotList();
   if (page === 'fishing') renderFishList();
+  if (page === 'arcade') renderArcadeList();
   if (page === 'promotions') renderPromotions();
   if (page === 'user') { updateUserPage(); fetchUserProfile(); }
   if (page === 'deposit' || page === 'withdraw') { updateBalanceDisplays(); fetchUserProfile(); }
@@ -1577,6 +1582,11 @@ function renderSlotList() {
 function renderFishList() {
   const grid = document.getElementById('fishListGrid');
   grid.innerHTML = GAME_IMAGES.fish.map((g, i) => createGameCard(g, i + 20)).join('');
+}
+
+function renderArcadeList() {
+  const grid = document.getElementById('arcadeListGrid');
+  grid.innerHTML = GAME_IMAGES.arcade.map((g, i) => createGameCard(g, i + 22)).join('');
 }
 
 // ===== Settings =====
