@@ -1256,6 +1256,21 @@ function renderNoveltyList() {
   grid.innerHTML = [...boleNovelty, ...ppArcade].join('');
 }
 
+// 首页分类预览（只显示前4个）
+function renderHomeSlots() {
+  const grid = document.getElementById('homeSlotGames');
+  if (!grid) return;
+  const boleSlots = BOLE_GAMES.boleSlots.map((g, i) => createGameCard(g, i));
+  const ppSlots = GAME_IMAGES.slots.map((g, i) => createGameCard(g, i + boleSlots.length));
+  grid.innerHTML = [...boleSlots, ...ppSlots].slice(0, 4).join('');
+}
+
+function renderHomeFish() {
+  const grid = document.getElementById('homeFishGames');
+  if (!grid) return;
+  grid.innerHTML = GAME_IMAGES.fish.map((g, i) => createGameCard(g, i)).slice(0, 4).join('');
+}
+
 // ===== SPA Router =====
 function navigateTo(page) {
   // Hide all pages
@@ -1834,6 +1849,8 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('DOMContentLoaded', () => {
   // Render home games
   renderHotList('hotGames');
+  renderHomeSlots();
+  renderHomeFish();
   
   // Carousel
   startAutoSlide();
