@@ -122,55 +122,39 @@
 
   <!-- Category Icons -->
   <div class="category-icons">
+    <div class="cat-item" onclick="navigateTo('hot')">
+      <div class="cat-icon" style="background:linear-gradient(135deg,#e94560,#ff6b6b)"><i class="fas fa-fire"></i></div>
+      <span data-i18n="hot_games">热门游戏</span>
+    </div>
+    <div class="cat-item" onclick="navigateTo('poker')">
+      <div class="cat-icon" style="background:linear-gradient(135deg,#e74c3c,#f1948a)"><i class="fas fa-diamond"></i></div>
+      <span data-i18n="poker_games">扑克游戏</span>
+    </div>
     <div class="cat-item" onclick="navigateTo('slots')">
-      <div class="cat-icon" style="background:linear-gradient(135deg,#e94560,#ff6b6b)"><i class="fas fa-dice"></i></div>
+      <div class="cat-icon" style="background:linear-gradient(135deg,#f39c12,#f7dc6f)"><i class="fas fa-dice"></i></div>
       <span data-i18n="slots">老虎机</span>
     </div>
     <div class="cat-item" onclick="navigateTo('fishing')">
       <div class="cat-icon" style="background:linear-gradient(135deg,#3498db,#85c1e9)"><i class="fas fa-fish"></i></div>
       <span data-i18n="fishing">捕鱼游戏</span>
     </div>
-    <div class="cat-item" onclick="navigateTo('arcade')">
-      <div class="cat-icon" style="background:linear-gradient(135deg,#2ecc71,#82e0aa)"><i class="fas fa-gamepad"></i></div>
-      <span data-i18n="arcade">街机游戏</span>
+    <div class="cat-item" onclick="navigateTo('novelty')">
+      <div class="cat-icon" style="background:linear-gradient(135deg,#2ecc71,#82e0aa)"><i class="fas fa-star"></i></div>
+      <span data-i18n="novelty_games">新奇游戏</span>
     </div>
     <div class="cat-item" onclick="navigateTo('promotions')">
-      <div class="cat-icon" style="background:linear-gradient(135deg,#f39c12,#f7dc6f)"><i class="fas fa-gift"></i></div>
+      <div class="cat-icon" style="background:linear-gradient(135deg,#9b59b6,#c39bd3)"><i class="fas fa-gift"></i></div>
       <span data-i18n="promotions">优惠活动</span>
-    </div>
-    <div class="cat-item" onclick="navigateTo('deposit')">
-      <div class="cat-icon" style="background:linear-gradient(135deg,#e74c3c,#f1948a)"><i class="fas fa-wallet"></i></div>
-      <span data-i18n="deposit">充值</span>
-    </div>
-    <div class="cat-item">
-      <div class="cat-icon" style="background:linear-gradient(135deg,#9b59b6,#c39bd3)"><i class="fas fa-users"></i></div>
-      <span data-i18n="menu_friends">推荐好友</span>
     </div>
   </div>
 
   <!-- Game Sections -->
   <div class="game-section">
     <div class="section-header">
-      <h3><i class="fas fa-fire" style="color:#e94560"></i> <span data-i18n="hot_slots">热门老虎机</span></h3>
-      <a onclick="navigateTo('slots')" class="see-all"><span data-i18n="view_all">查看全部</span> <i class="fas fa-chevron-right"></i></a>
+      <h3><i class="fas fa-fire" style="color:#e94560"></i> <span data-i18n="hot_games">热门游戏</span></h3>
+      <a onclick="navigateTo('hot')" class="see-all"><span data-i18n="view_all">查看全部</span> <i class="fas fa-chevron-right"></i></a>
     </div>
-    <div class="game-grid" id="slotGames"></div>
-  </div>
-
-  <div class="game-section">
-    <div class="section-header">
-      <h3><i class="fas fa-fish" style="color:#3498db"></i> <span data-i18n="fishing_games">捕鱼游戏</span></h3>
-      <a onclick="navigateTo('fishing')" class="see-all"><span data-i18n="view_all">查看全部</span> <i class="fas fa-chevron-right"></i></a>
-    </div>
-    <div class="game-grid" id="fishGames"></div>
-  </div>
-
-  <div class="game-section">
-    <div class="section-header">
-      <h3><i class="fas fa-gamepad" style="color:#2ecc71"></i> <span data-i18n="arcade_games">街机游戏</span></h3>
-      <a onclick="navigateTo('arcade')" class="see-all"><span data-i18n="view_all">查看全部</span> <i class="fas fa-chevron-right"></i></a>
-    </div>
-    <div class="game-grid" id="arcadeGames"></div>
+    <div class="game-grid" id="hotGames"></div>
   </div>
 
 </div>
@@ -445,16 +429,39 @@
   </div>
 </div>
 
+<!-- ===== PAGE: Hot Games ===== -->
+<div class="page" data-page="hot">
+  <div class="list-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h2><i class="fas fa-fire" style="color:#e94560"></i> <span data-i18n="hot_games">热门游戏</span></h2>
+      <div style="width:40px"></div>
+    </div>
+    <div class="game-grid" id="hotGamesList"></div>
+  </div>
+</div>
+
+<!-- ===== PAGE: Poker ===== -->
+<div class="page" data-page="poker">
+  <div class="list-page">
+    <div class="page-top">
+      <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+      <h2><i class="fas fa-diamond" style="color:#e74c3c"></i> <span data-i18n="poker_games">扑克游戏</span></h2>
+      <div style="width:40px"></div>
+    </div>
+    <div class="game-grid" id="pokerGamesList"></div>
+  </div>
+</div>
+
 <!-- ===== PAGE: Slots ===== -->
 <div class="page" data-page="slots">
   <div class="list-page">
     <div class="page-top">
       <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
-      <h2 data-i18n="slots">老虎机</h2>
+      <h2><i class="fas fa-dice" style="color:#f39c12"></i> <span data-i18n="slots">老虎机</span></h2>
       <div style="width:40px"></div>
     </div>
-    <div class="provider-tabs" id="slotProviderTabs"></div>
-    <div id="slotListContainer"></div>
+    <div class="game-grid" id="slotGamesList"></div>
   </div>
 </div>
 
@@ -463,22 +470,22 @@
   <div class="list-page">
     <div class="page-top">
       <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
-      <h2 data-i18n="fishing">捕鱼游戏</h2>
+      <h2><i class="fas fa-fish" style="color:#3498db"></i> <span data-i18n="fishing">捕鱼游戏</span></h2>
       <div style="width:40px"></div>
     </div>
-    <div id="fishListGrid"></div>
+    <div class="game-grid" id="fishGamesList"></div>
   </div>
 </div>
 
-<!-- ===== PAGE: Arcade ===== -->
-<div class="page" data-page="arcade">
+<!-- ===== PAGE: Novelty ===== -->
+<div class="page" data-page="novelty">
   <div class="list-page">
     <div class="page-top">
       <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
-      <h2 data-i18n="arcade">街机游戏</h2>
+      <h2><i class="fas fa-star" style="color:#2ecc71"></i> <span data-i18n="novelty_games">新奇游戏</span></h2>
       <div style="width:40px"></div>
     </div>
-    <div id="arcadeListGrid"></div>
+    <div class="game-grid" id="noveltyGamesList"></div>
   </div>
 </div>
 

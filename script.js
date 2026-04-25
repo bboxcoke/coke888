@@ -332,6 +332,9 @@ const LANG = {
     'user_status': '用户状态',
     'filter': '筛选',
     'marquee_text': '🎉 欢迎来到Coke888 新人送首充送200%福利',
+    'hot_games': '🔥 热门游戏',
+    'poker_games': '扑克游戏',
+    'novelty_games': '新奇游戏',
   },
   en: {
     'loading': 'Loading...',
@@ -529,6 +532,9 @@ const LANG = {
     'user_status': 'Status',
     'filter': 'Filter',
     'marquee_text': '🎉 Welcome to Coke888 New users get 200% bonus on first deposit',
+    'hot_games': '🔥 Hot Games',
+    'poker_games': 'Poker Games',
+    'novelty_games': 'Novelty Games',
   },
   mm: {
     'loading': 'ဝန်ဆောင်နေသည်...',
@@ -761,6 +767,9 @@ const LANG = {
     'game_title_fishing': 'ငါးဖမ်းဂိမ်း',
     'game_title_arcade': 'အာကိတ်ဂိမ်း',
     'marquee_text': '🎉 Coke888 မှကြိုဆိုပါတယ် ပထမဆုံးငွေသွင်းလျှင် ၂၀၀% ဘောနပ်စ်',
+    'hot_games': '🔥 လူကြိုက်များဂိမ်းများ',
+    'poker_games': 'ဖဲဂိမ်းများ',
+    'novelty_games': 'ထူးထူးခြားခြားဂိမ်းများ',
   },
   th: {
     'loading': 'กำลังโหลด...',
@@ -1023,6 +1032,9 @@ const LANG = {
     'user_status': 'สถานะ',
     'filter': 'กรอง',
     'marquee_text': '🎉 ยินดีต้อนรับสู่ Coke888 ฝากครั้งแรกรับโบนัส 200%',
+    'hot_games': '🔥 เกมยอดนิยม',
+    'poker_games': 'เกมไพ่',
+    'novelty_games': 'เกมแปลกใหม่',
   }
 };
 
@@ -1141,10 +1153,97 @@ function getFallbackImg(index) {
   return `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><defs><linearGradient id="g"><stop offset="0%" stop-color="${colors[0]}"/><stop offset="100%" stop-color="${colors[1]}"/></linearGradient></defs><rect fill="url(#g)" width="200" height="200" rx="8"/><text x="100" y="110" text-anchor="middle" fill="white" font-size="14" font-weight="bold">${name}</text></svg>`)}`;
 }
 
+// ===== BOLE Games Data =====
+const BOLE_GAMES = {
+  hot: [
+    { id: 'slotfzsn', name: '非洲水牛', category: 'slots', provider: 'BOLE' },
+    { id: 'twone', name: 'Shan Koe Mee', category: 'poker', provider: 'BOLE' },
+    { id: 'blackjack', name: '21點', category: 'poker', provider: 'BOLE' },
+    { id: 'lhwar', name: '龍虎鬥', category: 'poker', provider: 'BOLE' },
+    { id: 'fsc', name: '泰國魚蟹蝦', category: 'novelty', provider: 'BOLE' },
+    { id: 'baccarat', name: '百家樂', category: 'poker', provider: 'BOLE' },
+  ],
+  boleSlots: [
+    { id: 'slotfzsn', name: '非洲水牛', category: 'slots', provider: 'BOLE' },
+  ],
+  bolePoker: [
+    { id: 'twone', name: 'Shan Koe Mee', category: 'poker', provider: 'BOLE' },
+    { id: 'blackjack', name: '21點', category: 'poker', provider: 'BOLE' },
+    { id: 'lhwar', name: '龍虎鬥', category: 'poker', provider: 'BOLE' },
+    { id: 'baccarat', name: '百家樂', category: 'poker', provider: 'BOLE' },
+  ],
+  boleNovelty: [
+    { id: 'fsc', name: '泰國魚蟹蝦', category: 'novelty', provider: 'BOLE' },
+  ],
+};
+
+const BOLE_BASE = 'https://demo.bolegaming.com/subgame/extends/index.html';
+const HOME_URL = 'https://coke888.onrender.com';
+
+function getBoleUrl(gameId) {
+  const un = 'demo' + Date.now();
+  return `${BOLE_BASE}?un=${un}&gid=${gameId}&lan=zh&home_url=${encodeURIComponent(HOME_URL)}`;
+}
+
+function getBoleImg(gameId) {
+  return `https://demo.bolegaming.com/main/assets/gameImg/${gameId}.png`;
+}
+
+// ===== Game Card Creation =====
 function createGameCard(game, index) {
+  if (game.provider === 'BOLE') {
+    const img = getBoleImg(game.id);
+    const url = getBoleUrl(game.id);
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><img src="${img}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"><div class="game-name">${game.name}<span class="game-provider">BOLE</span></div></div></a>`;
+  }
+  // PP game
   const sym = PP_SYMBOLS[game.name] || 'vs20olympgate';
   const demoUrl = `https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=${sym}&websiteUrl=https://demogamesfree.pragmaticplay.net&jurisdiction=99`;
   return `<a href="${demoUrl}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><img src="${game.img}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"><div class="game-name">${game.name}<span class="game-provider">PP</span></div></div></a>`;
+}
+
+// ===== Merge All Hot Games =====
+const SUPER_777 = { name: '超级777', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20olympgate.webp' };
+const DEEP_FISH = { name: '深海猎渔', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20olympx.webp' };
+
+// Hot games = BOLE hot + 超级777 + 深海猎渔
+function getHotGames() {
+  return [...BOLE_GAMES.hot, SUPER_777, DEEP_FISH];
+}
+
+// ===== Render All Game Lists =====
+function renderHotList(containerId) {
+  const grid = document.getElementById(containerId);
+  if (!grid) return;
+  const games = getHotGames();
+  if (games.length === 0) {
+    grid.innerHTML = `<div class="empty-state"><i class="fas fa-dice"></i><p>暂无游戏</p></div>`;
+    return;
+  }
+  grid.innerHTML = games.map((g, i) => createGameCard(g, i)).join('');
+}
+
+function renderBoleList(containerId, games) {
+  const grid = document.getElementById(containerId);
+  if (!grid) return;
+  if (games.length === 0) {
+    grid.innerHTML = `<div class="empty-state"><i class="fas fa-dice"></i><p>暂无游戏</p></div>`;
+    return;
+  }
+  grid.innerHTML = games.map((g, i) => createGameCard(g, i)).join('');
+}
+
+function renderSlotList() {
+  const grid = document.getElementById('slotListContainer') || document.getElementById('slotGamesList');
+  // Combine BOLE slots + PP slots
+  const boleSlots = BOLE_GAMES.boleSlots.map((g, i) => createGameCard(g, i));
+  const ppSlots = GAME_IMAGES.slots.map((g, i) => createGameCard(g, i + boleSlots.length));
+  grid.innerHTML = [...boleSlots, ...ppSlots].join('');
+}
+
+function renderFishList() {
+  const grid = document.getElementById('fishListGrid') || document.getElementById('fishGamesList');
+  grid.innerHTML = GAME_IMAGES.fish.map((g, i) => createGameCard(g, i)).join('');
 }
 
 // ===== SPA Router =====
@@ -1170,9 +1269,11 @@ function navigateTo(page) {
   }
   
   // Render dynamic content on page entry
+  if (page === 'hot') renderHotList('hotGamesList');
+  if (page === 'poker') renderBoleList('pokerGamesList', BOLE_GAMES.bolePoker);
   if (page === 'slots') renderSlotList();
   if (page === 'fishing') renderFishList();
-  if (page === 'arcade') renderArcadeList();
+  if (page === 'novelty') renderBoleList('noveltyGamesList', BOLE_GAMES.boleNovelty);
   if (page === 'promotions') renderPromotions();
   if (page === 'user') { updateUserPage(); fetchUserProfile(); }
   if (page === 'deposit' || page === 'withdraw') { updateBalanceDisplays(); fetchUserProfile(); }
@@ -1722,12 +1823,7 @@ document.addEventListener('keydown', (e) => {
 // ===== Init =====
 document.addEventListener('DOMContentLoaded', () => {
   // Render home games
-  const slotGrid = document.getElementById('slotGames');
-  if (slotGrid) slotGrid.innerHTML = GAME_IMAGES.slots.map((g, i) => createGameCard(g, i)).join('');
-  const fishGrid = document.getElementById('fishGames');
-  if (fishGrid) fishGrid.innerHTML = GAME_IMAGES.fish.map((g, i) => createGameCard(g, i + 13)).join('');
-  const arcadeGrid = document.getElementById('arcadeGames');
-  if (arcadeGrid) arcadeGrid.innerHTML = GAME_IMAGES.arcade.map((g, i) => createGameCard(g, i + 15)).join('');
+  renderHotList('hotGames');
   
   // Carousel
   startAutoSlide();
