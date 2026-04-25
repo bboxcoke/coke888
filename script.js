@@ -1170,13 +1170,10 @@ function getFallbackImg(index) {
 
 function createGameCard(game, index) {
   const demoUrl = getGameDemoUrl(game);
-  return `<div class="game-card"><img src="${game.img}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"><div class="game-name">${game.name}<span class="game-provider">${game.provider}</span></div><div class="game-actions"><button class="game-btn demo-btn" onclick="openGameDemo('${demoUrl}');event.stopPropagation()">🎮 试玩</button><button class="game-btn play-btn" onclick="showLogin()">🎰 进入</button></div></div>`;
+  return `<div class="game-card"><img src="${game.img}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"><div class="game-name">${game.name}<span class="game-provider">${game.provider}</span></div><div class="game-actions"><a href="${demoUrl}" target="_blank" rel="noopener noreferrer" class="game-btn demo-btn" onclick="event.stopPropagation()">🎮 试玩</a><button class="game-btn play-btn" onclick="showLogin()">🎰 进入</button></div></div>`;
 }
 
-// 打开游戏试玩（方案2 - 跳转外链）
-function openGameDemo(url) {
-  window.open(url, '_blank');
-}
+// 打开游戏试玩 - 改用<a>标签直接跳转，避免浏览器弹窗拦截
 
 // ===== SPA Router =====
 function navigateTo(page) {
