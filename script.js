@@ -1183,13 +1183,21 @@ function getBoleImg(gameId) {
 
 // ===== Game Card Creation =====
 function createGameCard(game, index) {
-  // 如果游戏已经带了 img 字段，直接用
-  const imgSrc = game.img || getFallbackImg(index);
   const url = game.provider === 'BOLE'
     ? getBoleUrl(game.id)
     : `https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=${PP_SYMBOLS[game.name] || 'vs20olympgate'}&websiteUrl=https://demogamesfree.pragmaticplay.net&jurisdiction=99`;
   const providerLabel = game.provider || 'BOLE';
-  return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><div class="img-wrap"><img src="${imgSrc}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}';this.style.objectFit='cover'" loading="lazy"></div><div class="game-name">${game.name}<span class="game-provider">${providerLabel}</span></div></div></a>`;
+  // BOLE 游戏用内联 SVG 背景（避免 data:image SVG 在 <img> 标签的兼容问题）
+  if (game.provider === 'BOLE' && !game.img) {
+    const colors = FALLBACK_COLORS[index % FALLBACK_COLORS.length];
+    const short = game.name.length <= 3 ? game.name : game.name.slice(0, 2);
+    const bgSvg = encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><defs><linearGradient id="g"><stop offset="0%" stop-color="${colors[0]}"/><stop offset="100%" stop-color="${colors[1]}"/></linearGradient></defs><rect fill="url(#g)" width="200" height="200"/><text x="100" y="115" text-anchor="middle" fill="white" font-size="48" font-weight="bold" font-family="sans-serif">${short}</text></svg>`
+    );
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><div class="img-wrap" style="background:url('data:image/svg+xml,${bgSvg}') center/cover no-repeat;background-color:${colors[0]}"></div><div class="game-name">${game.name}<span class="game-provider">${providerLabel}</span></div></div></a>`;
+  }
+  const imgSrc = game.img || getFallbackImg(index);
+  return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><div class="img-wrap"><img src="${imgSrc}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"></div><div class="game-name">${game.name}<span class="game-provider">${providerLabel}</span></div></div></a>`;
 }
 
 // ===== Render All Game Lists =====
