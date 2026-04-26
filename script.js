@@ -1187,11 +1187,10 @@ function createGameCard(game, index) {
     ? getBoleUrl(game.id)
     : `https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=${PP_SYMBOLS[game.name] || 'vs20olympgate'}&websiteUrl=https://demogamesfree.pragmaticplay.net&jurisdiction=99`;
   const providerLabel = game.provider || 'BOLE';
-  // BOLE 游戏用纯 CSS 渐变背景 + 首字，避免 data:image SVG 兼容问题
+  // BOLE 游戏用纯 CSS 渐变背景
   if (game.provider === 'BOLE' && !game.img) {
     const colors = FALLBACK_COLORS[index % FALLBACK_COLORS.length];
-    const short = game.name.length <= 3 ? game.name : game.name.slice(0, 2);
-    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><div class="img-wrap" style="background:linear-gradient(135deg,${colors[0]},${colors[1]});display:flex;align-items:center;justify-content:center"><span style="color:#fff;font-size:32px;font-weight:bold;font-family:sans-serif;opacity:0.9">${short}</span></div><div class="game-name">${game.name}<span class="game-provider">${providerLabel}</span></div></div></a>`;
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><div class="img-wrap" style="background:linear-gradient(135deg,${colors[0]},${colors[1]})"></div><div class="game-name">${game.name}<span class="game-provider">${providerLabel}</span></div></div></a>`;
   }
   const imgSrc = game.img || getFallbackImg(index);
   return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><div class="img-wrap"><img src="${imgSrc}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"></div><div class="game-name">${game.name}<span class="game-provider">${providerLabel}</span></div></div></a>`;
