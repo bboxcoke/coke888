@@ -1153,45 +1153,12 @@ function getFallbackImg(index) {
   return `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><defs><linearGradient id="g"><stop offset="0%" stop-color="${colors[0]}"/><stop offset="100%" stop-color="${colors[1]}"/></linearGradient></defs><rect fill="url(#g)" width="200" height="200" rx="8"/><text x="100" y="110" text-anchor="middle" fill="white" font-size="14" font-weight="bold">${name}</text></svg>`)}`;
 }
 
-// ===== BOLE Games Data =====
-const BOLE_GAMES = {
-  boleSlots: [
-    { id: 'slotfzsn', name: '非洲水牛', category: 'slots', provider: 'BOLE' },
-  ],
-  bolePoker: [
-    { id: 'twone', name: 'Shan Koe Mee', category: 'poker', provider: 'BOLE' },
-    { id: 'blackjack', name: '21點', category: 'poker', provider: 'BOLE' },
-    { id: 'lhwar', name: '龍虎鬥', category: 'poker', provider: 'BOLE' },
-    { id: 'baccarat', name: '百家樂', category: 'poker', provider: 'BOLE' },
-  ],
-  boleNovelty: [
-    { id: 'fsc', name: '泰國魚蟹蝦', category: 'novelty', provider: 'BOLE' },
-  ],
-};
 
-const BOLE_BASE = 'https://demo.bolegaming.com/subgame/extends/index.html';
-const HOME_URL = 'https://coke888.onrender.com';
-
-function getBoleUrl(gameId) {
-  const un = 'demo' + Date.now();
-  return `${BOLE_BASE}?un=${un}&gid=${gameId}&lan=zh&home_url=${encodeURIComponent(HOME_URL)}`;
-}
-
-function getBoleImg(gameId) {
-  return `https://demo.bolegaming.com/main/assets/gameImg/${gameId}.png`;
-}
 
 // ===== Game Card Creation =====
 function createGameCard(game, index) {
-  const url = game.provider === 'BOLE'
-    ? getBoleUrl(game.id)
-    : `https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=${PP_SYMBOLS[game.name] || 'vs20olympgate'}&websiteUrl=https://demogamesfree.pragmaticplay.net&jurisdiction=99`;
-  const providerLabel = game.provider || 'BOLE';
-  // BOLE 游戏用纯 CSS 渐变背景
-  if (game.provider === 'BOLE' && !game.img) {
-    const colors = FALLBACK_COLORS[index % FALLBACK_COLORS.length];
-    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><div class="img-wrap" style="background:linear-gradient(135deg,${colors[0]},${colors[1]})"></div><div class="game-name">${game.name}<span class="game-provider">${providerLabel}</span></div></div></a>`;
-  }
+  const url = `https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=${PP_SYMBOLS[game.name] || 'vs20olympgate'}&websiteUrl=https://demogamesfree.pragmaticplay.net&jurisdiction=99`;
+  const providerLabel = game.provider || 'PP';
   const imgSrc = game.img || getFallbackImg(index);
   return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><div class="img-wrap"><img src="${imgSrc}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"></div><div class="game-name">${game.name}<span class="game-provider">${providerLabel}</span></div></div></a>`;
 }
@@ -1209,10 +1176,7 @@ function renderBoleList(containerId, games) {
 
 function renderSlotList() {
   const grid = document.getElementById('slotListContainer') || document.getElementById('slotGamesList');
-  // Combine BOLE slots + PP slots
-  const boleSlots = BOLE_GAMES.boleSlots.map((g, i) => createGameCard(g, i));
-  const ppSlots = GAME_IMAGES.slots.map((g, i) => createGameCard(g, i + boleSlots.length));
-  grid.innerHTML = [...boleSlots, ...ppSlots].join('');
+  grid.innerHTML = GAME_IMAGES.slots.map((g, i) => createGameCard(g, i)).join('');
 }
 
 function renderFishList() {
@@ -1223,19 +1187,15 @@ function renderFishList() {
 function renderNoveltyList() {
   const grid = document.getElementById('noveltyGamesList');
   if (!grid) return;
-  // BOLE novelty + PP arcade
-  const boleNovelty = BOLE_GAMES.boleNovelty.map((g, i) => createGameCard(g, i));
-  const ppArcade = GAME_IMAGES.arcade.map((g, i) => createGameCard(g, i + boleNovelty.length));
-  grid.innerHTML = [...boleNovelty, ...ppArcade].join('');
+  grid.innerHTML = GAME_IMAGES.arcade.map((g, i) => createGameCard(g, i)).join('');
 }
 
 // 首页分类预览（只显示前4个）
 function renderHomeSlots() {
   const grid = document.getElementById('homeSlotGames');
   if (!grid) return;
-  const boleSlots = BOLE_GAMES.boleSlots.map((g, i) => createGameCard(g, i));
-  const ppSlots = GAME_IMAGES.slots.map((g, i) => createGameCard(g, i + boleSlots.length));
-  grid.innerHTML = [...boleSlots, ...ppSlots].slice(0, 4).join('');
+  const ppSlots = GAME_IMAGES.slots.map((g, i) => createGameCard(g, i));
+  grid.innerHTML = ppSlots.slice(0, 4).join('');
 }
 
 function renderHomeFish() {
@@ -1247,15 +1207,18 @@ function renderHomeFish() {
 function renderHomePoker() {
   const grid = document.getElementById('homePokerGames');
   if (!grid) return;
-  grid.innerHTML = BOLE_GAMES.bolePoker.map((g, i) => createGameCard(g, i)).slice(0, 4).join('');
+  // 扑克游戏无可用游戏
+  grid.innerHTML = '';
+  // 隐藏扑克板块标题
+  const section = grid.closest('.game-section');
+  if (section) section.style.display = 'none';
 }
 
 function renderHomeNovelty() {
   const grid = document.getElementById('homeNoveltyGames');
   if (!grid) return;
-  const boleNovelty = BOLE_GAMES.boleNovelty.map((g, i) => createGameCard(g, i));
-  const ppArcade = GAME_IMAGES.arcade.map((g, i) => createGameCard(g, i + boleNovelty.length));
-  grid.innerHTML = [...boleNovelty, ...ppArcade].slice(0, 4).join('');
+  const ppArcade = GAME_IMAGES.arcade.map((g, i) => createGameCard(g, i));
+  grid.innerHTML = ppArcade.slice(0, 4).join('');
 }
 
 // ===== SPA Router =====
@@ -1281,7 +1244,6 @@ function navigateTo(page) {
   }
   
   // Render dynamic content on page entry
-  if (page === 'poker') renderBoleList('pokerGamesList', BOLE_GAMES.bolePoker);
   if (page === 'slots') renderSlotList();
   if (page === 'fishing') renderFishList();
   if (page === 'novelty') renderNoveltyList();
