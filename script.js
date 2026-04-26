@@ -1281,6 +1281,25 @@ function renderHomeNovelty() {
   grid.innerHTML = ppArcade.slice(0, 4).join('');
 }
 
+// 热门游戏页：从所有游戏随机取24个填满网格
+function renderHotGames() {
+  const grid = document.getElementById('hotGamesList');
+  if (!grid) return;
+  const allGames = [
+    ...GAME_IMAGES.slots,
+    ...GAME_IMAGES.fish,
+    ...GAME_IMAGES.arcade,
+  ];
+  // Fisher-Yates 洗牌
+  const shuffled = [...allGames];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const count = Math.min(24, shuffled.length);
+  grid.innerHTML = shuffled.slice(0, count).map((g, i) => createGameCard(g, i)).join('');
+}
+
 // ===== SPA Router =====
 function navigateTo(page) {
   // Hide all pages
@@ -1308,6 +1327,7 @@ function navigateTo(page) {
   if (page === 'fishing') renderFishList();
   if (page === 'novelty') renderNoveltyList();
   if (page === 'promotions') renderPromotions();
+  if (page === 'hot') renderHotGames();
   if (page === 'user') { updateUserPage(); fetchUserProfile(); }
   if (page === 'deposit' || page === 'withdraw') { updateBalanceDisplays(); fetchUserProfile(); }
   if (page === 'transactions') { cachedTransactions = null; renderTransactions('all'); }
