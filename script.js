@@ -1706,28 +1706,7 @@ function renderPromotions() {
   `).join('');
 }
 
-// ===== Game Lists =====
-function renderSlotList() {
-  const grid = document.getElementById('slotListGrid') || document.getElementById('slotListContainer');
-  const games = GAME_IMAGES.slots;
-  if (games.length === 0) {
-    grid.innerHTML = `<div class="empty-state"><i class="fas fa-dice"></i><p>暂无游戏</p></div>`;
-    return;
-  }
-  grid.innerHTML = games.map((g, i) => createGameCard(g, i)).join('');
-}
-
-function renderFishList() {
-  const grid = document.getElementById('fishListGrid');
-  grid.innerHTML = GAME_IMAGES.fish.map((g, i) => createGameCard(g, i + 20)).join('');
-}
-
-function renderArcadeList() {
-  const grid = document.getElementById('arcadeListGrid');
-  grid.innerHTML = GAME_IMAGES.arcade.map((g, i) => createGameCard(g, i + 22)).join('');
-}
-
-// ===== Settings =====
+// ===== Settings ===== =====
 async function changePassword() {
   const old = document.getElementById('oldPassword').value;
   const newPwd = document.getElementById('newPassword').value;
