@@ -448,6 +448,34 @@ i { font-style: normal; }
   transform: scale(0.95);
 }
 
+/* 热门游戏 - 无图片，只有图标+文字，强制卡片等大 */
+.hot-card {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 110px;
+  padding: 12px 4px;
+  background: linear-gradient(135deg, #1a1a3e, #2a2a5e);
+  border-color: rgba(212, 168, 67, 0.2);
+}
+.hot-card-icon {
+  font-size: 28px;
+  color: #D4A843;
+  margin-bottom: 6px;
+}
+#hotGames .game-name {
+  flex-direction: column;
+  gap: 4px;
+  min-height: auto;
+  padding: 0;
+  white-space: normal;
+  line-height: 1.2;
+}
+#hotGames .game-provider {
+  font-size: 9px;
+}
+
 .game-card .img-wrap {
   width: 100%;
   overflow: hidden;
