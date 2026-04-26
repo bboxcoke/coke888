@@ -1183,8 +1183,8 @@ function getBoleImg(gameId) {
 
 // ===== Game Card Creation =====
 function createGameCard(game, index) {
-  // 如果游戏已经带了 img 字段（如热门游戏的 SVG 图标），直接用它
-  const imgSrc = game.img || (game.provider === 'BOLE' ? getBoleImg(game.id) : GAME_IMAGES.slots[0]?.img);
+  // 如果游戏已经带了 img 字段，直接用
+  const imgSrc = game.img || getFallbackImg(index);
   const url = game.provider === 'BOLE'
     ? getBoleUrl(game.id)
     : `https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=${PP_SYMBOLS[game.name] || 'vs20olympgate'}&websiteUrl=https://demogamesfree.pragmaticplay.net&jurisdiction=99`;
