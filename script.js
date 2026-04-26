@@ -1866,8 +1866,7 @@ document.addEventListener('keydown', (e) => {
 
 // ===== Init =====
 document.addEventListener('DOMContentLoaded', () => {
-  // Render home games
-  renderHotList('hotGames');
+  // 热门游戏已写死在 HTML 中，不再 JS 渲染，防止覆盖
   renderHomeSlots();
   renderHomeFish();
   
