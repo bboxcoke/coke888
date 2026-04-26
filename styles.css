@@ -431,7 +431,6 @@ i { font-style: normal; }
   gap: 8px;
   min-width: 0;
   width: 100%;
-  overflow: hidden;
 }
 
 .game-card {
@@ -440,14 +439,7 @@ i { font-style: normal; }
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s;
-  /* 金色边框 — 用box-shadow代替伪元素避免溢出 */
-  border: none;
-  position: relative;
-  box-shadow: 
-    0 0 0 2px rgba(212, 168, 67, 0.3),
-    0 0 8px rgba(212, 168, 67, 0.25),
-    0 0 4px rgba(0, 0, 0, 0.8),
-    inset 0 0 4px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(212, 168, 67, 0.3);
   min-width: 0;
   width: 100%;
 }
@@ -459,9 +451,15 @@ i { font-style: normal; }
 .game-card .img-wrap {
   position: relative;
   width: 100%;
-  padding-bottom: 100%;
   overflow: hidden;
   background: linear-gradient(135deg, #1a1a3e, #2a2a5e);
+}
+
+/* padding-bottom 制造正方形，兼容所有浏览器包括 iOS Safari */
+.game-card .img-wrap::before {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
 }
 
 .game-card .img-wrap img {
