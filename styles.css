@@ -743,6 +743,21 @@ i { font-style: normal; }
   }
 }
 
+/* 手机端：热门游戏改为2列，卡片等宽，解决图片尺寸不一致问题 */
+@media (max-width: 479px) {
+  #hotGames {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  #hotGames .img-wrap {
+    aspect-ratio: 1 / 1;
+  }
+  #hotGames .img-wrap img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+}
+
 @media (max-width: 360px) {
   .category-icon {
     width: 44px;
