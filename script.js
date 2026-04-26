@@ -1183,7 +1183,8 @@ function getBoleImg(gameId) {
 
 // ===== Game Card Creation =====
 function createGameCard(game, index) {
-  const imgSrc = game.provider === 'BOLE' ? getBoleImg(game.id) : game.img;
+  // 如果游戏已经带了 img 字段（如热门游戏的 SVG 图标），直接用它
+  const imgSrc = game.img || (game.provider === 'BOLE' ? getBoleImg(game.id) : GAME_IMAGES.slots[0]?.img);
   const url = game.provider === 'BOLE'
     ? getBoleUrl(game.id)
     : `https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=${PP_SYMBOLS[game.name] || 'vs20olympgate'}&websiteUrl=https://demogamesfree.pragmaticplay.net&jurisdiction=99`;
@@ -1195,17 +1196,38 @@ function createGameCard(game, index) {
 const SUPER_777 = { name: '超级777', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20olympgate.webp' };
 const DEEP_FISH = { name: '深海猎渔', provider: 'PP', img: 'https://cdn.myanmarshankoeme.com/build/assets/img/bf688/pp/vs20olympx.webp' };
 
+// Hot games icon SVG 生成 - 统一正方形图标，彻底解决图片尺寸不一致
+function getHotIcon(name) {
+  const colors = [
+    ['#e94560', '#c23152'],
+    ['#f39c12', '#e67e22'],
+    ['#2ecc71', '#27ae60'],
+    ['#3498db', '#2980b9'],
+    ['#9b59b6', '#8e44ad'],
+    ['#1abc9c', '#16a085'],
+    ['#e74c3c', '#c0392b'],
+    ['#f1c40f', '#d4a843'],
+  ];
+  const idx = name.charCodeAt(0) % colors.length;
+  const [c1, c2] = colors[idx];
+  const short = name.length <= 3 ? name : name.slice(0, 2);
+  return `data:image/svg+xml,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><defs><linearGradient id="g"><stop offset="0%" stop-color="${c1}"/><stop offset="100%" stop-color="${c2}"/></linearGradient></defs><rect fill="url(#g)" width="200" height="200"/><text x="100" y="115" text-anchor="middle" fill="white" font-size="48" font-weight="bold" font-family="sans-serif">${short}</text></svg>`
+  )}`;
+}
+
 // Hot games - 按用户指定顺序: 非洲水牛, SKM, 21点, 龙虎斗, 超级777, 深海猎渔, 泰国鱼蟹虾, 百家乐
+// 每张卡都用统一正方形 SVG 图标，不用外部图片
 function getHotGames() {
   return [
-    { id: 'slotfzsn', name: '非洲水牛', category: 'slots', provider: 'BOLE' },
-    { id: 'twone', name: 'Shan Koe Mee', category: 'poker', provider: 'BOLE' },
-    { id: 'blackjack', name: '21點', category: 'poker', provider: 'BOLE' },
-    { id: 'lhwar', name: '龍虎鬥', category: 'poker', provider: 'BOLE' },
-    SUPER_777,
-    DEEP_FISH,
-    { id: 'fsc', name: '泰國魚蟹蝦', category: 'novelty', provider: 'BOLE' },
-    { id: 'baccarat', name: '百家樂', category: 'poker', provider: 'BOLE' },
+    { id: 'slotfzsn', name: '非洲水牛', category: 'slots', provider: 'BOLE', img: getHotIcon('非洲水牛') },
+    { id: 'twone', name: 'Shan Koe Mee', category: 'poker', provider: 'BOLE', img: getHotIcon('Shan Koe Mee') },
+    { id: 'blackjack', name: '21點', category: 'poker', provider: 'BOLE', img: getHotIcon('21點') },
+    { id: 'lhwar', name: '龍虎鬥', category: 'poker', provider: 'BOLE', img: getHotIcon('龍虎鬥') },
+    { ...SUPER_777, img: getHotIcon('超级777') },
+    { ...DEEP_FISH, img: getHotIcon('深海猎渔') },
+    { id: 'fsc', name: '泰國魚蟹蝦', category: 'novelty', provider: 'BOLE', img: getHotIcon('泰國魚蟹蝦') },
+    { id: 'baccarat', name: '百家樂', category: 'poker', provider: 'BOLE', img: getHotIcon('百家樂') },
   ];
 }
 
