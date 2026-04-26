@@ -1188,7 +1188,7 @@ function createGameCard(game, index) {
     ? getBoleUrl(game.id)
     : `https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=${PP_SYMBOLS[game.name] || 'vs20olympgate'}&websiteUrl=https://demogamesfree.pragmaticplay.net&jurisdiction=99`;
   const providerLabel = game.provider || 'BOLE';
-  return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><div class="img-wrap"><img src="${imgSrc}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"></div><div class="game-name">${game.name}<span class="game-provider">${providerLabel}</span></div></div></a>`;
+  return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><div class="img-wrap"><img src="${imgSrc}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}';this.style.objectFit='cover'" loading="lazy"></div><div class="game-name">${game.name}<span class="game-provider">${providerLabel}</span></div></div></a>`;
 }
 
 // ===== Merge All Hot Games =====
