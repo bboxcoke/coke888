@@ -1183,15 +1183,12 @@ function getBoleImg(gameId) {
 
 // ===== Game Card Creation =====
 function createGameCard(game, index) {
-  if (game.provider === 'BOLE') {
-    const img = getBoleImg(game.id);
-    const url = getBoleUrl(game.id);
-    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><img src="${img}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"><div class="game-name">${game.name}<span class="game-provider">BOLE</span></div></div></a>`;
-  }
-  // PP game
-  const sym = PP_SYMBOLS[game.name] || 'vs20olympgate';
-  const demoUrl = `https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=${sym}&websiteUrl=https://demogamesfree.pragmaticplay.net&jurisdiction=99`;
-  return `<a href="${demoUrl}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><img src="${game.img}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"><div class="game-name">${game.name}<span class="game-provider">PP</span></div></div></a>`;
+  const imgSrc = game.provider === 'BOLE' ? getBoleImg(game.id) : game.img;
+  const url = game.provider === 'BOLE'
+    ? getBoleUrl(game.id)
+    : `https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=${PP_SYMBOLS[game.name] || 'vs20olympgate'}&websiteUrl=https://demogamesfree.pragmaticplay.net&jurisdiction=99`;
+  const providerLabel = game.provider || 'BOLE';
+  return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="game-card-link"><div class="game-card"><div class="img-wrap"><img src="${imgSrc}" alt="${game.name}" onerror="this.src='${getFallbackImg(index)}'" loading="lazy"></div><div class="game-name">${game.name}<span class="game-provider">${providerLabel}</span></div></div></a>`;
 }
 
 // ===== Merge All Hot Games =====

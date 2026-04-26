@@ -456,14 +456,22 @@ i { font-style: normal; }
   transform: scale(0.95);
 }
 
-.game-card img {
+.game-card .img-wrap {
+  position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  padding-bottom: 100%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a3e, #2a2a5e);
+}
+
+.game-card .img-wrap img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
-  background: linear-gradient(135deg, #1a1a3e, #2a2a5e);
-  position: relative;
-  z-index: 1;
   display: block;
 }
 
