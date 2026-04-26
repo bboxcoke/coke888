@@ -1189,28 +1189,28 @@ const GAME_IMAGES = {
 };
 
 // ===== Fallback Image =====
-const FALLBACK_COLORS = [
-  ['#ff6b35', '#ff3d00'], ['#8e44ad', '#c0392b'], ['#2980b9', '#3498db'],
-  ['#e67e22', '#f1c40f'], ['#1b8a3c', '#2ecc71'], ['#e94560', '#ff6b6b'],
-  ['#8B4513', '#D2691E'], ['#2c3e50', '#34495e'],
-];
-const GAME_NAMES_FALLBACK = [
-  '财富之王', '埃及宝藏', '龙之宝藏', '超级777',
-  '黄金之路', '水果乐园', '海盗宝藏', '魔法森林',
-  '鱼王争霸', '深海猎手', '捕鱼达人', '海底世界',
-  '赛车风云', '射击高手', '飞机大战', '弹球大师',
-  '大赢家', '狂野西部', '火凤凰', '丛林之王',
-  '甜蜜丰收', '龙之宝珠', '狼人月', '玛雅宝藏',
-  '功夫战士', '埃及之王', '财富熊猫', '海盗王',
-  '龙火', '圣夜礼物', '舞龙舞狮', '幸运兔',
-  '黄金猴子', '甜心炸弹', '雷神之锤', '万圣节',
-  '深海之谜', '北极熊', '青蛙王子', '太空入侵',
+// 使用 BOLE Gaming 的精美游戏图片作为 fallback（全部可访问）
+const BOLE_BG_IMAGES = [
+  'https://demo.bolegaming.com/main/assets/gameImg/slotfzsn.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/twone.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/zjh.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/baccarat.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/blackjack.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/dzmj.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/fish.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/jdnn.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/brnn.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/fsc.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/lhwar.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/jdbaccarat.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/hldz.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/hldz.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/ddz.png',
+  'https://demo.bolegaming.com/main/assets/gameImg/paodekuai.png',
 ];
 
 function getFallbackImg(index) {
-  const colors = FALLBACK_COLORS[index % FALLBACK_COLORS.length];
-  const name = GAME_NAMES_FALLBACK[index % GAME_NAMES_FALLBACK.length];
-  return `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><defs><linearGradient id="g"><stop offset="0%" stop-color="${colors[0]}"/><stop offset="100%" stop-color="${colors[1]}"/></linearGradient></defs><rect fill="url(#g)" width="200" height="200" rx="8"/><text x="100" y="110" text-anchor="middle" fill="white" font-size="14" font-weight="bold">${name}</text></svg>`)}`;
+  return BOLE_BG_IMAGES[index % BOLE_BG_IMAGES.length];
 }
 
 
