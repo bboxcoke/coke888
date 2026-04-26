@@ -449,28 +449,18 @@ i { font-style: normal; }
 }
 
 .game-card .img-wrap {
-  position: relative;
   width: 100%;
   overflow: hidden;
   background: linear-gradient(135deg, #1a1a3e, #2a2a5e);
-}
-
-/* padding-bottom 制造正方形，兼容所有浏览器包括 iOS Safari */
-.game-card .img-wrap::before {
-  content: '';
-  display: block;
-  padding-bottom: 100%;
+  aspect-ratio: 1 / 1;
 }
 
 .game-card .img-wrap img {
-  position: absolute;
-  top: 0;
-  left: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  display: block;
 }
 
 .game-card .game-name {
@@ -740,21 +730,6 @@ i { font-style: normal; }
 @media (min-width: 480px) {
   .game-grid {
     grid-template-columns: repeat(5, 1fr);
-  }
-}
-
-/* 手机端：热门游戏改为2列，卡片等宽，解决图片尺寸不一致问题 */
-@media (max-width: 479px) {
-  #hotGames {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  #hotGames .img-wrap {
-    aspect-ratio: 1 / 1;
-  }
-  #hotGames .img-wrap img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
   }
 }
 
