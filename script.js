@@ -1250,12 +1250,42 @@ function renderNoveltyList() {
   grid.innerHTML = GAME_IMAGES.arcade.map((g, i) => createGameCard(g, i)).join('');
 }
 
-// 首页分类预览（只显示前4个）
+// 首页分类预览
 function renderHomeSlots() {
   const grid = document.getElementById('homeSlotGames');
+  const moreGrid = document.getElementById('homeSlotMoreGames');
   if (!grid) return;
-  const ppSlots = GAME_IMAGES.slots.map((g, i) => createGameCard(g, i));
-  grid.innerHTML = ppSlots.slice(0, 4).join('');
+  const allSlots = GAME_IMAGES.slots.map((g, i) => createGameCard(g, i));
+  // 显示前16个（4排）
+  grid.innerHTML = allSlots.slice(0, 16).join('');
+  // 剩下的放到抽屉里
+  if (allSlots.length > 16) {
+    moreGrid.innerHTML = allSlots.slice(16).join('');
+  }
+  // 重置展开状态
+  const btn = document.getElementById('slotShowMore');
+  const moreWrap = document.getElementById('homeSlotMoreGames');
+  if (btn) btn.classList.remove('open');
+  if (moreWrap) moreWrap.style.display = 'none';
+  const moreText = document.getElementById('slotMoreText');
+  if (moreText) moreText.textContent = '更多老虎机';
+}
+
+function toggleMoreSlots() {
+  const moreGrid = document.getElementById('homeSlotMoreGames');
+  const btn = document.getElementById('slotShowMore');
+  const moreText = document.getElementById('slotMoreText');
+  if (!moreGrid || !btn) return;
+  const isOpen = moreGrid.style.display !== 'none';
+  if (isOpen) {
+    moreGrid.style.display = 'none';
+    btn.classList.remove('open');
+    moreText.textContent = '更多老虎机';
+  } else {
+    moreGrid.style.display = 'grid';
+    btn.classList.add('open');
+    moreText.textContent = '收起';
+  }
 }
 
 function renderHomeFish() {
