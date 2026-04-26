@@ -1447,7 +1447,6 @@ function updateAuthUI() {
   const userData = localStorage.getItem('phoenix_user');
   const headerGuest = document.getElementById('headerGuest');
   const headerUser = document.getElementById('headerUser');
-  const userBtn = document.getElementById('userBtnHeader');
   const balanceEl = document.getElementById('userBalanceHeader');
   const balanceDisplay = document.getElementById('balanceDisplay');
   
@@ -1456,8 +1455,6 @@ function updateAuthUI() {
     // Show logged-in UI, hide guest UI
     headerGuest.style.display = 'none';
     headerUser.style.display = 'flex';
-    userBtn.innerHTML = `<i class="fas fa-user"></i> ${user.username}`;
-    userBtn.onclick = () => navigateTo('user');
     balanceEl.style.display = 'flex';
     balanceDisplay.textContent = formatBalance(user.balance || 0);
     
