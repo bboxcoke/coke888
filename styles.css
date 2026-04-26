@@ -444,6 +444,30 @@ i { font-style: normal; }
   width: 100%;
 }
 
+/* 热门游戏隐藏图片，只显示文字 */
+#hotGames .img-wrap {
+  display: none;
+}
+#hotGames .game-card {
+  background: linear-gradient(135deg, #1a1a3e, #2a2a5e);
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-color: rgba(212, 168, 67, 0.2);
+}
+#hotGames .game-name {
+  padding: 8px;
+  font-size: 13px;
+  min-height: auto;
+  flex-direction: column;
+  gap: 6px;
+  white-space: normal;
+}
+#hotGames .game-provider {
+  font-size: 10px;
+}
+
 .game-card:active {
   transform: scale(0.95);
 }
