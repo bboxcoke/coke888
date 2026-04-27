@@ -896,12 +896,26 @@ i { font-style: normal; }
   font-size: 20px;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  animation: pulse 2s infinite;
   transition: transform 0.2s;
 }
 
 .social-float-item:active {
   transform: scale(0.9);
+}
+
+/* Telegram 漂浮按钮：放大一倍 + 动态缩放 */
+.telegram-float {
+  width: 60px;
+  height: 60px;
+  font-size: 28px;
+  background: #0088cc;
+  color: #fff;
+  animation: telegramBounce 2s ease-in-out infinite;
+}
+
+@keyframes telegramBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
 }
 
 /* ===== Notification Badge ===== */
