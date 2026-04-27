@@ -332,6 +332,16 @@ const LANG = {
     'user_status': '用户状态',
     'filter': '筛选',
     'marquee_text': '🎉 欢迎来到Coke888 新人送首充送200%福利',
+    'page_title': 'Coke 888 | 最佳线上娱乐',
+    'banner1_title': '首存红利',
+    'banner1_desc': '首次存款 100% 奖励<br>最高 500,000 MMK',
+    'banner1_cta': '立即领取',
+    'banner2_title': '每日返水',
+    'banner2_desc': '每日最高 1.5% 返水<br>不限游戏种类',
+    'banner2_cta': '查看详情',
+    'banner3_title': 'VIP俱乐部',
+    'banner3_desc': '尊享专属特权<br>更高返水、更快提款',
+    'banner3_cta': '升级VIP',
     'hot_games': '热门游戏',
     'poker_games': '扑克游戏',
     'novelty_games': '新奇游戏',
@@ -532,6 +542,16 @@ const LANG = {
     'user_status': 'Status',
     'filter': 'Filter',
     'marquee_text': '🎉 Welcome to Coke888 New users get 200% bonus on first deposit',
+    'page_title': 'Coke 888 | Best Online Casino',
+    'banner1_title': 'First Deposit Bonus',
+    'banner1_desc': '100% First Deposit Bonus<br>Up to 500,000 MMK',
+    'banner1_cta': 'Claim Now',
+    'banner2_title': 'Daily Rebate',
+    'banner2_desc': 'Up to 1.5% Daily Rebate<br>All Games Included',
+    'banner2_cta': 'View Details',
+    'banner3_title': 'VIP Club',
+    'banner3_desc': 'Exclusive VIP Privileges<br>Higher Rebate, Faster Withdrawal',
+    'banner3_cta': 'Upgrade VIP',
     'hot_games': 'Hot Games',
     'poker_games': 'Poker Games',
     'novelty_games': 'Novelty Games',
@@ -767,6 +787,16 @@ const LANG = {
     'game_title_fishing': 'ငါးဖမ်းဂိမ်း',
     'game_title_arcade': 'အာကိတ်ဂိမ်း',
     'marquee_text': '🎉 Coke888 မှကြိုဆိုပါတယ် ပထမဆုံးငွေသွင်းလျှင် ၂၀၀% ဘောနပ်စ်',
+    'page_title': 'Coke 888 | အကောင်းဆုံးအွန်လိုင်းကာစီနို',
+    'banner1_title': 'ပထမအကြိမ်ငွေသွင်းဘောနပ်စ်',
+    'banner1_desc': 'ပထမအကြိမ်ငွေသွင်း 100% ဘောနပ်စ်<br>အများဆုံး ၅၀၀,၀၀၀ MMK',
+    'banner1_cta': 'ယခုရယူရန်',
+    'banner2_title': 'နေ့စဉ်ပြန်အမ်းငွေ',
+    'banner2_desc': 'နေ့စဉ် ၁.၅% အထိပြန်အမ်း<br>ဂိမ်းအားလုံးပါဝင်',
+    'banner2_cta': 'အသေးစိတ်ကြည့်ရန်',
+    'banner3_title': 'VIP ကလပ်',
+    'banner3_desc': 'သီးသန့် VIP အခွင့်ထူးများ<br>မြင့်မားသောပြန်အမ်းငွေ၊ အမြန်ငွေထုတ်',
+    'banner3_cta': 'VIP အဆင့်မြှင့်ရန်',
     'hot_games': 'လူကြိုက်များဂိမ်းများ',
     'poker_games': 'ဖဲဂိမ်းများ',
     'novelty_games': 'ထူးထူးခြားခြားဂိမ်းများ',
@@ -1032,6 +1062,16 @@ const LANG = {
     'user_status': 'สถานะ',
     'filter': 'กรอง',
     'marquee_text': '🎉 ยินดีต้อนรับสู่ Coke888 ฝากครั้งแรกรับโบนัส 200%',
+    'page_title': 'Coke 888 | คาสิโนออนไลน์ที่ดีที่สุด',
+    'banner1_title': 'โบนัสฝากครั้งแรก',
+    'banner1_desc': 'ฝากครั้งแรก 100% โบนัส<br>สูงสุด 500,000 MMK',
+    'banner1_cta': 'รับเลย',
+    'banner2_title': 'เงินคืนรายวัน',
+    'banner2_desc': 'เงินคืนรายวันสูงสุด 1.5%<br>รวมทุกเกม',
+    'banner2_cta': 'ดูรายละเอียด',
+    'banner3_title': 'VIP คลับ',
+    'banner3_desc': 'สิทธิพิเศษ VIP<br>เงินคืนสูงกว่า ถอนเร็วขึ้น',
+    'banner3_cta': 'อัปเกรด VIP',
     'hot_games': 'เกมยอดนิยม',
     'poker_games': 'เกมไพ่',
     'novelty_games': 'เกมแปลกใหม่',
@@ -1052,7 +1092,7 @@ function setLanguage(lang) {
   document.querySelectorAll('.lang-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === lang);
   });
-  // Apply translations
+  // Apply translations via data-i18n
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
     el.textContent = t(key);
@@ -1061,6 +1101,11 @@ function setLanguage(lang) {
     const key = el.dataset.i18nPlaceholder;
     el.placeholder = t(key);
   });
+  // Update HTML lang attribute
+  document.documentElement.lang = lang;
+  // Translate <title>
+  const titleEl = document.querySelector('title[data-i18n]');
+  if (titleEl) titleEl.textContent = t('page_title');
   showToast(t('lang_switched') + ' ' + {cn:'🇨🇳中文',en:'🇬🇧English',mm:'🇲🇲မြန်မာ',th:'🇹🇭ไทย'}[lang]);
 }
 
