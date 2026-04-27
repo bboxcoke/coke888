@@ -905,9 +905,9 @@ i { font-style: normal; }
 
 /* Telegram 漂浮按钮：放大一倍 + 动态缩放 */
 .telegram-float {
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
   background: #D4A843;
   color: #0a0a0f;
   animation: telegramBounce 2s ease-in-out infinite;
