@@ -908,9 +908,10 @@ i { font-style: normal; }
   width: 60px;
   height: 60px;
   font-size: 28px;
-  background: #0088cc;
-  color: #fff;
+  background: #D4A843;
+  color: #0a0a0f;
   animation: telegramBounce 2s ease-in-out infinite;
+  box-shadow: 0 0 0 10px rgba(212, 168, 67, 0.25), 0 4px 12px rgba(0,0,0,0.4);
 }
 
 @keyframes telegramBounce {
